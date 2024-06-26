@@ -1,0 +1,42 @@
+table.center {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    width: 90%;
+  }
+  table.cetner th {
+    text-align:left;
+    background-color: #ff863a;
+    color: rgb(106, 0, 193);
+  }
+  table.center thead tr th, table.center tbody tr td{
+    border-bottom: 1px solid rgb(161, 46, 255);
+  }
+
+  th {
+    text-align:left;
+    background-color: #ff863a;
+    color: rgb(106, 0, 193);
+  }
+  
+  td {
+    background-color: rgb(145, 41, 230);
+    color: #ff863a;
+    border : 0px
+  }
+
+  tr:hover td {
+    background-color: #8e1bec;
+    color: #ff863a;
+  }
+  body {
+    background-color: #ff863a;
+  }
+  .filter {
+    color: rgb(106, 0, 193);
+    font-weight: bold;
+  }
+  .filter-txtbox {
+    background-color:#ff9e54 ;
+    color: #8e1bec;
+  }

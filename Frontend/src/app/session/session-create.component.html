@@ -1,0 +1,17 @@
+<h2>Create Session</h2>
+<hr>
+<form>
+    <label for="title">Title</label><br>
+    <input type="text" name="title" [(ngModel)]="title"><br>
+    <label for="system">System</label><br>
+    <input type="text" name="system" [(ngModel)]="system"><br>
+    <label for="tags">Tags</label><br>
+    <input type="text" name="tags" [(ngModel)]="tags"><br>
+    <label for="maxNumberOfPlayers">Number of players</label><br>
+    <input type="number" name="maxNumberOfPlayers" [(ngModel)]="maxNumberOfPlayers"><br>
+    <label for="description">Description</label><br>
+    <textarea name="descriptionArea" cols="70" rows="10" [(ngModel)]="description"
+    class="form-control">
+    </textarea>
+    <input type="submit" (click)="onSubmitClicked()">Create session<br>
+</form> 
