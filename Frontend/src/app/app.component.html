@@ -1,0 +1,31 @@
+<div *ngIf="burgerNotClicked" class="topnav">
+    <a class="active">RPGroup</a>
+    <a>My sessions</a>
+    <a>Recomended</a>
+    <a (click)="onCreateSessionClicked()">Create session</a>
+    <a>Explore</a>
+    <div class="topnav-right">
+    <a class="logo"><img class="profpic" src="/assets/profilepic.png"></a>
+    <a class="topnav-right">UserName</a>
+    <a (click)="onBurgerClicked()" class="icon">&#9776;</a> 
+    </div>
+</div>
+  
+
+<div *ngIf="burgerClicked" class="topnav responsive">
+    <a class="active">RPGroup <img class="profpic" src="/assets/profilepic.png"></a>  
+    <a>My sessions</a>
+    <a>Recomended</a>
+    <a>Explore</a>
+    <a>Create session</a>
+    <a>Account</a>
+    <a (click)="onBurgerClicked()" class="icon">&#9776;</a>  
+</div>
+
+<div *ngIf="chosenExplore">
+    <session-list></session-list>
+</div>
+
+<div *ngIf="chosenCreateSession">
+    <session-create></session-create>
+</div>

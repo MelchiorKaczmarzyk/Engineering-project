@@ -1,0 +1,102 @@
+[
+    {
+        "sessionId" : "0",
+        "gm" : "gm0",
+        "tags"  : "tag1, tag2, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "1",
+        "gm" : "gm1",
+        "tags"  : "tag1, tag2, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "2",
+        "gm" : "gm2",
+        "tags"  : "tag1, tag2, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "3",
+        "gm" : "gm3",
+        "tags"  : "tag1, tag2, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "4",
+        "gm" : "gm4",
+        "tags"  : "tag1, tag2, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "5",
+        "gm" : "gm5",
+        "tags"  : "tag1, tag2, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "6",
+        "gm" : "gm6",
+        "tags"  : "tag1, tag2, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "7",
+        "gm" : "gm7",
+        "tags"  : "tag2, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "8",
+        "gm" : "gm8",
+        "tags"  : "tag1, tag3",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    },
+    {
+        "sessionId" : "9",
+        "gm" : "gm9",
+        "tags"  : "tag1, tag2",
+        "title" : "title",
+        "system" : "d&d",
+        "description" : "description",
+        "currentPlayerNumber" : "0",
+        "maxPlayerNumber" : "4"
+    }
+]
