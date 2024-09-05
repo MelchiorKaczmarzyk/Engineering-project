@@ -57,18 +57,23 @@ th {
     height: 40px;
   }
 
-  .topnav a.logo {
-    padding: 14px 0px;
-    padding-right: 20px;
+  a.logo {
+    padding-right: 10px;
+    padding-top: 10px;
     float: right
   }
 
   img.profpic {
     border-radius: 50%;
-    max-height: 40px;
+    height: 50px;
+    width: 50px;
   }
 
   .topnav a.topnav-right {
+    float: right
+  }
+
+  .topnav-right {
     float: right
   }
   
@@ -179,4 +184,15 @@ th {
       width: 100%;
       text-align: left;
     }
+  }
+
+  .long-spacer {
+    flex: 1 1 auto;
+  }
+  .short-spacer {
+    flex: 0.025 1;
+  }
+
+  .margin {
+    margin-left: 40px;
   }

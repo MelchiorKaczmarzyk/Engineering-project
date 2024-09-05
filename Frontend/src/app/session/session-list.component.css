@@ -6,37 +6,85 @@ table.center {
   }
   table.cetner th {
     text-align:left;
-    background-color: #ff863a;
-    color: rgb(106, 0, 193);
-  }
-  table.center thead tr th, table.center tbody tr td{
-    border-bottom: 1px solid rgb(161, 46, 255);
   }
 
   th {
     text-align:left;
-    background-color: #ff863a;
-    color: rgb(106, 0, 193);
-  }
-  
-  td {
-    background-color: rgb(145, 41, 230);
-    color: #ff863a;
-    border : 0px
   }
 
-  tr:hover td {
-    background-color: #8e1bec;
-    color: #ff863a;
+  .sessionList {
+    width: 90%;
+    padding-right: 40px
   }
-  body {
-    background-color: #ff863a;
+
+  button {
+    margin-left: 7px;
+    margin-bottom: 20px;
   }
-  .filter {
-    color: rgb(106, 0, 193);
-    font-weight: bold;
+
+  .currentFilters {
+    margin-left: 10px;
+    width: 400px;
   }
-  .filter-txtbox {
-    background-color:#ff9e54 ;
-    color: #8e1bec;
-  }
+
+  tr.regularRow {
+    transition: filter 0.3s ease;
+}
+
+tr:hover.regularRow {
+    filter: brightness(90%);
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+/*Size depends on the card size*/
+image.gmImage {
+  width: 100px; /* desired circle diameter */
+  height: 100px; /* same as width to make it a square */
+  border-radius: 50%;
+  
+}
+
+td.playerInfo {
+  padding-right: 30px; /* Adjust the value to increase/decrease spacing */
+}
+
+td.discordIcon {
+  padding-right: 5px;
+  padding-bottom: 10px;
+}
+
+img.discordIcon {
+  width: 25px;
+  height: 25px;
+}
+
+tr.justText {
+  font-weight: normal;
+}
+
+th.justText {
+  font-weight: normal;
+}
+
+img.circle {
+  width: 100px; /* desired circle diameter */
+  height: 100px; /* same as width to make it a square */
+  border-radius: 50%;
+  overflow: hidden; /* ensures any excess image is clipped */
+  object-fit: cover; /* scales the image to maintain aspect ratio */
+}
+
+  @media screen and (max-width:650px) {
+    .smallScreen  { display: block; visibility: visible; }
+    .bigScreen { display: none !important; }
+    .currentFilters { margin-left: 0px; width: 400px;}
+}
+

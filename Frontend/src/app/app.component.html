@@ -1,31 +1,94 @@
-<div *ngIf="burgerNotClicked" class="topnav">
-    <a class="active">RPGroup</a>
-    <a>My sessions</a>
-    <a>Recomended</a>
-    <a (click)="onCreateSessionClicked()">Create session</a>
-    <a>Explore</a>
-    <div class="topnav-right">
-    <a class="logo"><img class="profpic" src="/assets/profilepic.png"></a>
-    <a class="topnav-right">UserName</a>
-    <a (click)="onBurgerClicked()" class="icon">&#9776;</a> 
-    </div>
-</div>
-  
 
-<div *ngIf="burgerClicked" class="topnav responsive">
-    <a class="active">RPGroup <img class="profpic" src="/assets/profilepic.png"></a>  
-    <a>My sessions</a>
-    <a>Recomended</a>
-    <a>Explore</a>
-    <a>Create session</a>
-    <a>Account</a>
-    <a (click)="onBurgerClicked()" class="icon">&#9776;</a>  
+<div class="bigScreen">
+<mat-toolbar color="accent">
+
+      <span> <button mat-button (click)="onHomeClicked()"><h3>RPGroup</h3></button></span>
+      <div *ngIf="currentUserRole == 'Gm' || currentUserRole == 'Player'">
+        <span class="short-spacer"></span>
+        <span> <button mat-button (click)="onMySessionsClicked()">My sessions</button></span>
+        <span class="short-spacer"></span>
+      </div>
+      <span> <button mat-button (click)="onExploreClicked()">Explore</button></span>
+      <div *ngIf="currentUserRole == 'Gm'">
+        <span class="short-spacer"></span>  
+        <span> <button mat-button (click)="onCreateSessionClicked()">Create session</button></span>
+      </div>
+      <span class="long-spacer"></span>
+      <span *ngIf="currentUserRole == 'Gm' || currentUserRole == 'Player'"> 
+        <button mat-button (click)="onAccountClicked()">{{userName}}</button>
+      </span>
+      <span class="short-spacer"></span>
+      <span *ngIf="currentUserRole == 'Gm' || currentUserRole == 'Player'">
+        <a class="logo"><img class="profpic" src={{profilePicSrc}} alt={{profilePicPlaceHolder}} 
+        (click)="onAccountClicked()"></a>
+      </span>
+</mat-toolbar>
+<br>
+</div>
+
+<div class="smallScreen">
+<mat-toolbar color="accent">
+  <span> <button mat-button (click)="onHomeClicked()"><h3>RPGroup</h3></button></span>
+    <span class="long-spacer"></span>
+    <span><button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div *ngIf="currentUserRole=='Player' || currentUserRole == 'Gm'">
+        <button mat-menu-item (click)="onMySessionsClicked()">
+          <span>My sessions</span>
+        </button>
+        </div>
+        <button mat-menu-item (click)="onExploreClicked()">
+          <span>Explore</span>
+        </button>
+        <div *ngIf="currentUserRole == 'Gm'">
+        <button mat-menu-item (click)="onCreateSessionClicked()">
+          <span>Create session</span>
+        </button>
+        </div>
+        <div *ngIf="currentUserRole == 'Gm' || currentUserRole == 'Player'">
+          <button mat-menu-item (click)="onAccountClicked()">
+            <span>Account details</span>
+          </button>
+          </div>
+      </mat-menu>
+      </span>
+      <div *ngIf="currentUserRole == 'Gm' || currentUserRole == 'Player'">
+        <span class="short-spacer"></span>
+        <span><a class="logo"><img class="profpic" src={{profilePicSrc}} alt={{profilePicPlaceHolder}}></a></span>
+      </div>
+  </mat-toolbar>
+<br>
+</div>
+
+<div class="margin">
+<!--
+
+-->
+
+<div *ngIf="chosenLoginRegister">
+  <login-register></login-register>
 </div>
 
 <div *ngIf="chosenExplore">
-    <session-list></session-list>
+  <session-list></session-list>
 </div>
 
 <div *ngIf="chosenCreateSession">
-    <session-create></session-create>
+  <session-create></session-create>
+</div>
+
+<div *ngIf="chosenMySessions && currentUserRole == 'Gm'">
+  <my-sessions-gm></my-sessions-gm>
+</div>
+
+<div *ngIf="chosenMySessions && currentUserRole == 'Player'">
+  <my-sessions-player></my-sessions-player>
+</div>
+
+<div *ngIf="chosenAccount">
+  <account-details></account-details>
+</div>
+
 </div>

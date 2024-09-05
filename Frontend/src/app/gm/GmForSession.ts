@@ -1,4 +1,7 @@
 export class GmForSession
 {
-    name : string = ""
+    public name : string = ""
+    public email : string = ""
+    public profilePicture : string = ""
+    public discord : string = ""
 }

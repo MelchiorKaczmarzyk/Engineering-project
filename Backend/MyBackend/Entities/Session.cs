@@ -9,10 +9,6 @@ namespace MyBackend.Entities
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "system error")]
-        [MaxLength(50)]
-        public string System { get; set; } = string.Empty;
-
         [Required(ErrorMessage = "title error")]
         [MaxLength(50)]
         public string Title { get; set; } = string.Empty;
@@ -26,6 +22,9 @@ namespace MyBackend.Entities
         public int MaxNumberOfPlayers { get; set; }
         public string GmId { get; set; } = string.Empty;
         public Gm Gm { get; set; }
+        public string SystemId { get; set; } = string.Empty;
+        public GameSystem System { get; set; }
+        public string PicturePath {  get; set; } = string.Empty; 
         public ICollection<Player> Players { get; set; } = new List<Player>();
 
     }

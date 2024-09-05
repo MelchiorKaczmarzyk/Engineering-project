@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyBackend.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBackend.Models
 {
     public class SessionForPlayers
     {
-        [Required(ErrorMessage = "system error")]
-        [MaxLength(50)]
-        public string System { get; set; } = string.Empty;
+        public GameSystemModel System { get; set; }
 
         [Required(ErrorMessage = "title error")]
         [MaxLength(50)]

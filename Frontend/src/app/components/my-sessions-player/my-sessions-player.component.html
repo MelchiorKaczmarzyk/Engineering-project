@@ -1,0 +1,184 @@
+<div *ngIf="componentState==0">
+<h2>Your sessions</h2>
+<hr>
+<table mat-table class="sessionList" [dataSource]="filteredSessions">
+    <ng-container matColumnDef="Gm">
+      <th mat-header-cell *matHeaderCellDef > Gm </th>
+      <td mat-cell *matCellDef="let session"> {{session.gm.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="System">
+      <th mat-header-cell *matHeaderCellDef> System </th>
+      <td mat-cell *matCellDef="let session"> {{session.system.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let session"> {{session.title}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Tags">
+      <th mat-header-cell *matHeaderCellDef> Tags </th>
+      <td mat-cell *matCellDef="let session"> {{session.tags}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Players">
+      <th mat-header-cell *matHeaderCellDef> Players </th>
+      <td mat-cell *matCellDef="let session"> {{session.currentNumberOfPlayers}}/{{session.maxNumberOfPlayers}} </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr class="regularRow" mat-row *matRowDef="let myRowData; columns: columnsToDisplay" (click)="displaySessionDetails(myRowData)"></tr>  
+  </table>
+  </div>
+  
+  <div *ngIf="componentState==1">
+    <h2>Session details</h2>
+    <hr>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <img mat-card-avatar class="gmImage" src={{gmForSession.profilePicture}}>
+        <mat-card-title>{{sessionRow.title}}</mat-card-title>
+        <mat-card-subtitle>{{sessionRow.system.name}}</mat-card-subtitle>
+        <mat-card-subtitle>{{gmForSession.name}}</mat-card-subtitle>
+        <mat-card-subtitle><br></mat-card-subtitle>
+      </mat-card-header>
+      <br>
+      <img mat-card-image src={{sessionPicture}}>
+      <br>
+      <mat-card-content>
+        <p>
+          <br>
+          {{sessionRow.description}}
+        </p>
+      </mat-card-content>
+      <mat-card-footer>
+        <br>
+        <table>
+          <tr class="justText">
+            <th class="justText">
+              Number of players
+            </th>
+            <th class="justText">
+              {{sessionRow.currentNumberOfPlayers}}/{{sessionRow.maxNumberOfPlayers}}
+            </th>
+          </tr>
+          <tr class="justText">
+            <th class="justText">
+              Email:
+            </th>
+            <th class="justText">
+              {{gmForSession.email}}
+            </th>
+          </tr>
+          <tr class="justText">
+            <th class="justText">
+              Discord:
+            </th>
+            <th class="justText">
+              {{gmForSession.discord}}
+            </th>
+          </tr>
+        </table>
+      </mat-card-footer>
+    </mat-card>
+    <br>
+    <h2>Players:</h2>
+    <mat-divider></mat-divider>
+    <br>
+    <div *ngIf="noPlayers == false">
+      <table cellspacing="0">
+        <tbody>
+          <tr class="specialPlayerInfo">
+            <td class="specialPlayerInfo">
+              <img class="circle" src={{user.profilePicture}}>
+            </td>
+            <td class="specialPlayerInfo">
+              <h3>{{user.userName}}</h3>
+            </td>
+            <td class="specialPlayerInfo">
+              <h3>{{user.email}}</h3>
+            </td>
+            <td class="specialPlayerInfo">
+              <img class="discordIcon" src="assets\discordImage.png">
+            </td>
+            <td class="specialPlayerInfo">
+              <h3>{{user.discord}}</h3>
+            </td>
+          </tr>
+        <tr *ngFor="let player of playersForSession">
+          <td class="playerInfo">
+            <img class="circle" src={{player.profilePicture}}>
+          </td>
+          <td class="playerInfo">
+            <h3>{{player.name}}</h3>
+          </td>
+          <td class="playerInfo">
+            <h3>{{player.email}}</h3>
+          </td>
+          <td class="discordIcon">
+            <img class="discordIcon" src="assets\discordImage.png">
+          </td>
+          <td class="playerInfo">
+            <h3>{{player.discord}}</h3>
+          </td>
+        </tr>
+      </tbody>
+      </table>
+      </div>
+  <div *ngIf="noPlayers==true">
+  No other player has joined this session yet. Maybe come back and check a little later ;)
+  </div>
+    <br>
+    <br>
+    <button mat-flat-button color="accent" type="button" (click)="onReturnClicked()">
+      Return to your sessions
+    </button>
+    <mat-divider></mat-divider>
+    <br>
+    <button
+      mat-flat-button class="red" type="button" (click)="goToLeaveSession()">
+        Leave Session
+      </button>
+  </div>
+
+  <div *ngIf="componentState == 2">
+  It seems you have not joined any sessions yet. Try exploring a little bit to find a session that suits your preferences!
+  </div>
+
+  <div *ngIf="componentState==3">
+    <table>
+        <tr>
+            <th class="toLeft">
+            <h3>Are you sure you want to leave this session?</h3>
+            </th>
+        </tr>
+        <tr>
+            <th class="toLeft">
+                <button mat-flat-button color="primary" type="button" (click)="onReturnClicked()">
+                    Cancel</button>
+            </th>
+            <th class="toLeft">
+                <button mat-flat-button class="red" type="button" (click)="leaveSession()">
+                    Leave session</button>
+            </th>
+        </tr>
+    </table>
+</div>
+<div *ngIf="componentState == 4">
+  You have successfully left the session.
+  <br>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <button mat-flat-button color="primary" type="button" 
+      (click)="onReturnClicked()">Return to my sessions</button>
+</div>
+
+<div *ngIf="componentState == 5">
+  Failed to leave session :c
+  <br>
+  Make sure you have a stable internet connection or try again later
+  <br>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <button mat-flat-button color="primary" type="button" 
+      (click)="onReturnClicked()">Return to my sessions</button>
+</div>

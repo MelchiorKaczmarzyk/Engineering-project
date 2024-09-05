@@ -1,0 +1,1094 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MyBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/gameSystems": {
+      "get": {
+        "tags": [
+          "GameSystem"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GameSystemModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gameSystems/addSystem": {
+      "post": {
+        "tags": [
+          "GameSystem"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/GameSystemModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GameSystem"
+            }
+          }
+        }
+      }
+    },
+    "/api/gms/gmForSession": {
+      "get": {
+        "tags": [
+          "Gms"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Gm"
+            }
+          }
+        }
+      }
+    },
+    "/api/players/playersService": {
+      "get": {
+        "tags": [
+          "Players"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PlayerForService"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/players/leaveSession": {
+      "patch": {
+        "tags": [
+          "Players"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/LeaveSessionBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/sessions": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SessionModel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/{sessionId}": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "operationId": "GetPlayer",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sessionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/SessionModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/sessionService": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SessionForService"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/playerService": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PlayerForService"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/gmService": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GmForService"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/sessionPicture": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/sessions/addSession": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SessionPost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ParamsAddSessionResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/addPlayerToSession": {
+      "patch": {
+        "tags": [
+          "Sessions"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AddPlayerToSessionBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/sessions/deleteSession": {
+      "delete": {
+        "tags": [
+          "Sessions"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sessionTitle",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/logInUser": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/registerUser": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UserModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ParametersRegisterResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/users/getUserGmPicture": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "gmUserName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/relogInUser": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "userName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/UserModel"
+            }
+          }
+        }
+      }
+    },
+    "/api/users/userName": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PatchUserNameBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/email": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PatchEmailBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/profilePicture": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PatchProfilePicBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/discord": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PatchDiscordBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/users/user": {
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AddPlayerToSessionBody": {
+      "type": "object",
+      "properties": {
+        "sessionTitle": {
+          "type": "string"
+        },
+        "playerName": {
+          "type": "string"
+        }
+      }
+    },
+    "GameSystem": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "GameSystemModel": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Gm": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Session"
+          }
+        }
+      }
+    },
+    "GmForService": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SessionForGms"
+          }
+        }
+      }
+    },
+    "GmForSessions": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "GmModel": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SessionModel"
+          }
+        }
+      }
+    },
+    "LeaveSessionBody": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "sessionTitle": {
+          "type": "string"
+        }
+      }
+    },
+    "ParametersRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "emailIsUnique": {
+          "type": "boolean"
+        },
+        "emailIsCorrect": {
+          "type": "boolean"
+        },
+        "passwordIsCorrect": {
+          "type": "boolean"
+        },
+        "userNameIsCorrect": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ParamsAddSessionResponse": {
+      "type": "object",
+      "properties": {
+        "isTitleUnique": {
+          "type": "boolean"
+        },
+        "isSystemNew": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PatchDiscordBody": {
+      "type": "object",
+      "properties": {
+        "discord": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        }
+      }
+    },
+    "PatchEmailBody": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        }
+      }
+    },
+    "PatchProfilePicBody": {
+      "type": "object",
+      "properties": {
+        "profilePic": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        }
+      }
+    },
+    "PatchUserNameBody": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Player": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Session"
+          }
+        }
+      }
+    },
+    "PlayerForService": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "profilePicture": {
+          "type": "string"
+        },
+        "discord": {
+          "type": "string"
+        }
+      }
+    },
+    "PlayerForSessions": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "PlayerModel": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SessionModel"
+          }
+        }
+      }
+    },
+    "Session": {
+      "required": [
+        "description",
+        "title"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 500,
+          "minLength": 1,
+          "type": "string"
+        },
+        "maxNumberOfPlayers": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "gmId": {
+          "type": "string"
+        },
+        "gm": {
+          "$ref": "#/definitions/Gm"
+        },
+        "systemId": {
+          "type": "string"
+        },
+        "system": {
+          "$ref": "#/definitions/GameSystem"
+        },
+        "picturePath": {
+          "type": "string"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Player"
+          }
+        }
+      }
+    },
+    "SessionForGms": {
+      "required": [
+        "description",
+        "title"
+      ],
+      "type": "object",
+      "properties": {
+        "system": {
+          "$ref": "#/definitions/GameSystemModel"
+        },
+        "title": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 500,
+          "minLength": 1,
+          "type": "string"
+        },
+        "maxNumberOfPlayers": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "playerSessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerForSessions"
+          }
+        }
+      }
+    },
+    "SessionForService": {
+      "required": [
+        "description",
+        "title"
+      ],
+      "type": "object",
+      "properties": {
+        "system": {
+          "$ref": "#/definitions/GameSystemModel"
+        },
+        "title": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 500,
+          "minLength": 1,
+          "type": "string"
+        },
+        "gm": {
+          "$ref": "#/definitions/GmForSessions"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerForSessions"
+          }
+        },
+        "currentNumberOfPlayers": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "maxNumberOfPlayers": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "SessionModel": {
+      "required": [
+        "description",
+        "title"
+      ],
+      "type": "object",
+      "properties": {
+        "system": {
+          "$ref": "#/definitions/GameSystemModel"
+        },
+        "title": {
+          "maxLength": 50,
+          "minLength": 1,
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 500,
+          "minLength": 1,
+          "type": "string"
+        },
+        "maxNumberOfPlayers": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "gm": {
+          "$ref": "#/definitions/GmModel"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerModel"
+          }
+        }
+      }
+    },
+    "SessionPost": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "$ref": "#/definitions/GameSystemModel"
+        },
+        "title": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "picture": {
+          "type": "string"
+        },
+        "maxNumberOfPlayers": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "gmUserName": {
+          "type": "string"
+        }
+      }
+    },
+    "UserModel": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "discord": {
+          "type": "string"
+        },
+        "profilePicture": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

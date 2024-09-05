@@ -1,0 +1,87 @@
+table.center {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    width: 90%;
+  }
+  table.cetner th {
+    text-align:left;
+  }
+
+  th {
+    text-align:left;
+  }
+
+  .sessionList {
+    width: 90%;
+    padding-right: 40px
+  }
+
+  button {
+    margin-left: 7px;
+    margin-bottom: 20px;
+  }
+
+  .currentFilters {
+    margin-left: 10px;
+    width: 400px;
+  }
+
+  tr.regularRow {
+    transition: filter 0.3s ease;
+}
+
+tr:hover.regularRow {
+    filter: brightness(90%);
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+/*Size depends on the card size*/
+image.gmImage {
+  width: 100px; /* desired circle diameter */
+  height: 100px; /* same as width to make it a square */
+  border-radius: 50%;
+  
+}
+
+td.playerInfo {
+  padding-right: 30px; /* Adjust the value to increase/decrease spacing */
+}
+
+td.discordIcon {
+  padding-right: 5px;
+  padding-bottom: 10px;
+}
+
+img.discordIcon {
+  width: 25px;
+  height: 25px;
+}
+
+tr.justText {
+  font-weight: normal;
+}
+
+th.justText {
+  font-weight: normal;
+}
+
+button.red {
+  background-color: red;
+  color : white;
+}
+img.circle {
+  width: 100px; /* desired circle diameter */
+  height: 100px; /* same as width to make it a square */
+  border-radius: 50%;
+  overflow: hidden; /* ensures any excess image is clipped */
+  object-fit: cover; /* scales the image to maintain aspect ratio */
+}

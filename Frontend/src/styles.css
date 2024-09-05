@@ -2,7 +2,15 @@ h1{
     font-size:xx-large;
 }
 
-body {
-    background-color: #ff863a;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.smallScreen {
+    display: none;
+    visibility: hidden;
+  }
+
+  @media screen and (max-width:650px) {
+    .smallScreen  { display: block; visibility: visible; }
+    .bigScreen { display: none !important; }
+}

@@ -1,13 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyBackend.Entities;
 
 namespace MyBackend.DbContext
 {
-    public class MyDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class MyDbContext : IdentityDbContext<User> //Microsoft.EntityFrameworkCore.DbContext
     {
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Gm> Gms { get; set; }
+        public DbSet<GameSystem> Systems { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=MyBackend.db");
@@ -109,13 +111,35 @@ namespace MyBackend.DbContext
                     Id = "4",
                     Name = "Player4"
                 });
+            modelBuilder.Entity<GameSystem>()
+                .HasData(
+                new GameSystem()
+                {
+                    Id = "1",
+                    Name = "d&d 5e"
+                },
+                new GameSystem()
+                {
+                    Id = "2",
+                    Name = "Veasen"
+                },
+                new GameSystem()
+                {
+                    Id = "3",
+                    Name = "Things from the Flood"
+                },
+                new GameSystem()
+                {
+                    Id = "4",
+                    Name = "DC20"
+                });
             modelBuilder.Entity<Session>()
                 .HasData(
                 new Session()
                 {
                     Id = "1",
                     GmId = "1",
-                    System = "d&d",
+                    SystemId = "1",
                     Title = "title1",
                     Tags = "tag1, tag2, tag3",
                     Description = "Description",
@@ -125,7 +149,7 @@ namespace MyBackend.DbContext
                 {
                     Id = "2",
                     GmId = "1",
-                    System = "d&d",
+                    SystemId = "2",
                     Title = "title2",
                     Tags = "tag1, tag2, tag3",
                     Description = "Description",
@@ -135,7 +159,7 @@ namespace MyBackend.DbContext
                 {
                     Id = "3",
                     GmId = "2",
-                    System = "d&d",
+                    SystemId = "3",
                     Title = "title3",
                     Tags = "tag1, tag2, tag3",
                     Description = "Description",
@@ -145,7 +169,7 @@ namespace MyBackend.DbContext
                 {
                     Id = "4",
                     GmId = "2",
-                    System = "Veasen",
+                    SystemId = "4",
                     Title = "title4",
                     Tags = "tag2, tag3",
                     Description = "Description",

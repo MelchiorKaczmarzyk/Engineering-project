@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.StaticFiles;
 using MyBackend.DbContext;
+using MyBackend.Entities;
 using MyBackend.Services;
 
 var MyAllowSpecificOrigins = "MyCORS";
@@ -11,9 +14,12 @@ builder.Services.AddControllers(options =>
 {
     options.ReturnHttpNotAcceptable = true;
 }).AddNewtonsoftJson();
+
+builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddCors(options =>
 {
@@ -21,11 +27,15 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           //for development only
-                          policy.AllowAnyOrigin();
+                          policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                          //policy.WithOrigins("http://localhost:4200");
                       });
 });
 
 builder.Services.AddDbContext<MyDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MyDbContext>();
 builder.Services.AddScoped<IBackendRepository, BackendRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -42,13 +52,17 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
 app.UseCors(MyAllowSpecificOrigins);
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
-
-app.UseAuthorization();
 
 app.MapControllers();
 

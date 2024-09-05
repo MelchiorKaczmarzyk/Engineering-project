@@ -7,9 +7,7 @@ namespace MyBackend.Models
     //and SessionModelWithoutGm
     public class SessionModel
     {
-        [Required(ErrorMessage = "system error")]
-        [MaxLength(50)]
-        public string System { get; set; } = string.Empty;
+        public GameSystemModel System { get; set; }
 
         [Required(ErrorMessage = "title error")]
         [MaxLength(50)]
@@ -21,7 +19,6 @@ namespace MyBackend.Models
         [MaxLength(500)]
         public string Description { get; set; } = string.Empty;
         public int MaxNumberOfPlayers { get; set; }
-        public string GmId { get; set; } = string.Empty;
         public GmModel Gm { get; set; }
         public ICollection<PlayerModel> Players { get; set; } = new List<PlayerModel>();
     }

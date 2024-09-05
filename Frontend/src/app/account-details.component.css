@@ -1,0 +1,51 @@
+img.profilePicDisplay {
+    border-radius: 50%; 
+    width: 200px;
+    height: 200px;
+}
+
+table {
+    border-spacing: 0 20px;
+}
+
+button.delete {
+    background-color: red;
+    color: white;
+}
+
+button.small {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 12px;
+    padding-right: 0px;
+    background-color: white;
+    color :rgb(28, 28, 28);
+    height: 40px;          
+    white-space: nowrap;
+}
+
+button.small:hover {
+    filter: brightness(90%);
+}
+
+th.toBottom {
+    vertical-align: bottom;
+    text-align: left;
+}
+
+th.content {
+    text-align: center;
+    font-weight: normal;
+}
+
+th.toLeft {
+    text-align: left;
+}
+
+.red {
+    color:rgba(253, 34, 34, 0.833)
+}
+
+.emailInput {
+    width: 100px;
+}
