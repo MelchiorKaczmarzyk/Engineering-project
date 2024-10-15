@@ -26,6 +26,8 @@ export class MySessionsGm implements OnInit, OnDestroy{
     componentState : number = 0
     columnsToDisplay = ["System", "Title", "Tags", "Players"]
 
+    deleteSessionUrl = 'https://localhost:7271/api/sessions/deleteSession'
+    playersForSessionUrl = 'https://localhost:7271/api/players/playersService'
     getSessionPictureUrl : string = "https://localhost:7271/api/sessions/sessionPicture"
     getGmPictureUrl : string = ""
     sessionRow : Session = new Session()
@@ -76,7 +78,7 @@ export class MySessionsGm implements OnInit, OnDestroy{
             error: () => { console.log("errored")}
         })
     }
-    private playersForSessionUrl = 'https://localhost:7271/api/players/playersService'
+    
     getPlayersForSession(session : Session): Observable<PlayerToDisplay[]>{
        return this.http.get<PlayerToDisplay[]>(this.playersForSessionUrl, {
            params: {
@@ -102,7 +104,7 @@ export class MySessionsGm implements OnInit, OnDestroy{
             this.componentState = 2
     }
 
-    private deleteSessionUrl = 'https://localhost:7271/api/sessions/deleteSession'
+    
     subDeleteSession! : Subscription
     deleteSession() {
         {

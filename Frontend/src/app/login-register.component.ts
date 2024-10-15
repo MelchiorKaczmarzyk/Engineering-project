@@ -11,7 +11,7 @@ import { UserService } from "./UserService";
 export class LoginRegister implements OnInit, OnDestroy {
     constructor(private http: HttpClient, private userService : UserService) {}
 
-    urlRegister : string = 'https://localhost:7271/api/users/registerUser'
+    urlRegister : string = "https://localhost:7271/api/users/registerUser"
     //0 - start screen and logging in
     //1 - register screen
     //2 - logging error screen
@@ -180,7 +180,7 @@ export class LoginRegister implements OnInit, OnDestroy {
             this.tooLongDiscord = true 
             this.errorHappened = true
         }
-        if(this.profilePicDisplay == "" || !this.profilePicDisplay.includes("data:image/png;base64")){
+        if(this.profilePicDisplay == "" ){
             this.wrongPicture = true
             this.errorHappened = true
 
@@ -245,8 +245,14 @@ this.componentState = 4
         this.showImage = true
     }
 
+    testDeployedResponse = "Welcome to RPGroup"
+    depolyedUrl : string = "https://melchiorbackend.azurewebsites.net/api/sessions/testDeploy"
     ngOnInit(): void {
-        this.justArrived = true
+        this.http.get(this.depolyedUrl).subscribe({
+            next: (response : any) => {this.testDeployedResponse = response.text},
+            complete: () => {console.log("complete")},
+            error: () => {console.log("error")}
+        })
     }
 
     ngOnDestroy(): void {

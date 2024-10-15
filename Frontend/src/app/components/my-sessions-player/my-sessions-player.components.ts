@@ -26,7 +26,9 @@ export class MySessionsPlayer {
     //5 - leave fail
     componentState : number = 0
     columnsToDisplay = ["Gm", "System", "Title", "Tags", "Players"]
-
+    
+    leaveSessionUrl = 'https://localhost:7271/api/players/leaveSession'
+    playersForSessionUrl = 'https://localhost:7271/api/players/playersService'
     getSessionPictureUrl : string = "https://localhost:7271/api/sessions/sessionPicture"
     getGmPictureUrl : string = ""
     sessionRow : Session = new Session()
@@ -38,6 +40,7 @@ export class MySessionsPlayer {
     playersForSession : PlayerToDisplay[] = []
     playersForSessionLess : PlayerToDisplay[] = []
     noPlayers : boolean = true
+    initialLength : number = 0
     displaySessionDetails(row: Session) {
         this.sessionRow = row
         this.componentState = 1
@@ -73,6 +76,7 @@ export class MySessionsPlayer {
         this.subPlayers = this.getPlayersForSession(row).subscribe({
             next: players => {
                 this.playersForSession = players
+                this.initialLength = this.playersForSession.length
             },
             complete: () => { 
                 if(this.playersForSession.length == 0)
@@ -90,7 +94,7 @@ export class MySessionsPlayer {
             error: () => { console.log("errored")}
         })
     }
-    private playersForSessionUrl = 'https://localhost:7271/api/players/playersService'
+    
     getPlayersForSession(session : Session): Observable<PlayerToDisplay[]>{
        return this.http.get<PlayerToDisplay[]>(this.playersForSessionUrl, {
            params: {
@@ -119,7 +123,7 @@ export class MySessionsPlayer {
     goToLeaveSession() {
         this.componentState = 3
     }
-    private leaveSessionUrl = 'https://localhost:7271/api/players/leaveSession'
+    
     subLeaveSession! : Subscription
     leaveSession() {
         this.http.patch(this.leaveSessionUrl, {
@@ -153,7 +157,7 @@ export class MySessionsPlayer {
                         if(p.name == user.userName)
                             return true
                         else
-                            return false
+                            continue
                     }
                     return false
                 }

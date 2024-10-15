@@ -85,3 +85,9 @@ img.circle {
   overflow: hidden; /* ensures any excess image is clipped */
   object-fit: cover; /* scales the image to maintain aspect ratio */
 }
+
+@media screen and (max-width:650px) {
+  .example-card {
+    max-width: 300px;
+  }
+}

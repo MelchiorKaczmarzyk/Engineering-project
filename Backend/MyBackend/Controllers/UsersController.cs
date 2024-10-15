@@ -153,7 +153,7 @@ namespace MyBackend.Controllers
             else
             {
                 user = await _userManager.FindByEmailAsync(userPosted.Email);
-                if (user != null || user.Email.Equals(""))
+                if (user != null)
                 {
                     inputError = true;
                     if(!(userPosted.Email.Equals("")))
@@ -341,7 +341,7 @@ namespace MyBackend.Controllers
                 }
                 else
                 {
-                    var userTemp = _repos.GetUserByUserName(body.UserName);
+                    var userTemp =  await _repos.GetUserByUserName(body.UserName);
                     if (userTemp != null)
                     {
                         userNameUnique = false;
@@ -360,6 +360,19 @@ namespace MyBackend.Controllers
                 if(user == null)
                 {  
                     return NotFound(); 
+                }
+                if (user.Role.Equals("Gm"))
+                {
+                    var gm = await _repos.GetGmAsyncName(user.UserName);
+                    gm.Name = body.UserName;
+                }
+                else
+                {
+                    if (user.Role.Equals("Player"))
+                    {
+                        var player = await _repos.GetPlayerAsyncName(user.UserName);
+                        player.Name = body.UserName;
+                    }
                 }
 
                 user.UserName = body.UserName;
@@ -395,7 +408,7 @@ namespace MyBackend.Controllers
                 {
                     var usersTemp = await _repos.GetUsersAsync();
                     var userTemp = usersTemp.FirstOrDefault(u => u.Email.Equals(body.Email));
-                    if (usersTemp != null)
+                    if (userTemp != null)
                     {
                         emailUnique = false;
                         errorHappened = true;
@@ -443,10 +456,10 @@ namespace MyBackend.Controllers
                     return NotFound();
                 }
 
-                if (!(body.ProfilePic.Contains("data:image/png;base64")) || body.ProfilePic.Equals(""))
+                if (body.ProfilePic.Equals(""))
                     wrongPicture = true;
 
-                if(wrongPicture==true)
+                if (wrongPicture==true)
                 {
                     var result = new
                     {

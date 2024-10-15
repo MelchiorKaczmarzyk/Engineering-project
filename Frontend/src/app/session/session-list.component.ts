@@ -54,7 +54,7 @@ export class SessionList implements OnInit, OnDestroy {
         this._filterTag = value
     }
     filterTitle : string = ""
-    columnsToDisplay = ["Gm", "System", "Title", "Tags", "Players"]
+    columnsToDisplay = ["Gm", "System", "Title", "Tags"]
     
     filtersGm : string[] = []
     filtersSystem : string[] = []
@@ -146,10 +146,24 @@ export class SessionList implements OnInit, OnDestroy {
             session.title
             .includes(this.filterTitle)) && (
             this.compareTags(session, this.filtersTags)))
+
+            if(this.userService.userIsLoggedIn){
+                this.filteredSessions = this.filteredSessions.filter(s => 
+                    this.sessionIncludesPlayer(s, this.user.userName))
+            }
+            this.filteredSessions = this.filteredSessions.filter(s => 
+                s.currentNumberOfPlayers < s.maxNumberOfPlayers)
         if (this.filteredSessions.length == 0)
            this.anySessions = false
         else 
             this.anySessions = true
+    }
+    private sessionIncludesPlayer (session : Session, name : string) : boolean {
+        
+        if(session.players.some(p => p.name == name))
+            return false;
+        else
+            return true;
     }
 
     getSessionPictureUrl : string = "https://localhost:7271/api/sessions/sessionPicture"
@@ -233,30 +247,33 @@ export class SessionList implements OnInit, OnDestroy {
             playerName: this.user.userName,
             sessionTitle: this.sessionRow.title
         }).subscribe({
-            complete: () => {this.componentState = 3},
+            complete: () => {
+                this.componentState = 3
+                this.filterSessions()
+            },
             error: () => {this.componentState = 4}
         })
     }
 
     onReturnClicked() {
         this.componentState = 0
-    }
-
-    private sessionIncludesPlayer (session : Session, name : string) : boolean {
-        
-        if(session.players.some(p => p.name == name))
-            return false;
-        else
-            return true;
-        /*
-        for (var player of session.players){
-            if (player.name != name)
-                return true
-            else
-                return false
-        }
-        return true
-        */
+        this.sub = this.sessionService.getSessions().subscribe({
+            next: sessions => {
+               this.sessions = sessions
+               if(this.userService.userIsLoggedIn){
+                   this.user = this.userService.getCurrentUser()
+                   if(this.user.role == "Player"){
+                       this.sessions = sessions.filter(s => 
+                           this.sessionIncludesPlayer(s, this.user.userName))
+                   }
+                   if(this.user.role == "Gm")
+                       this.sessions = sessions.filter(s => s.gm.name != this.user.userName)
+                }
+                this.filteredSessions = this.sessions.filter(s => 
+                   s.currentNumberOfPlayers < s.maxNumberOfPlayers)
+            },
+            error: () => {this.explore = "error"}
+        })
     }
     
     sub!: Subscription
@@ -265,6 +282,7 @@ export class SessionList implements OnInit, OnDestroy {
     subGm : Subscription = new Subscription()
     playersForSession: PlayerToDisplay[] = []
     
+    explore : string = "Explore"
     ngOnInit(): void {
          this.sub = this.sessionService.getSessions().subscribe({
              next: sessions => {
@@ -278,10 +296,11 @@ export class SessionList implements OnInit, OnDestroy {
                     if(this.user.role == "Gm")
                         this.sessions = sessions.filter(s => s.gm.name != this.user.userName)
                  }
-                
-                this.filteredSessions = this.sessions
-                 
+                 this.filteredSessions = this.sessions.filter(s => 
+                    s.currentNumberOfPlayers < s.maxNumberOfPlayers)
              },
+             complete: () => {this.filterSessions()},
+             error: () => {this.explore = "error"}
          })
          this.subSystems = this.systemService.getSystems().subscribe({
             next: systems => {
@@ -293,6 +312,7 @@ export class SessionList implements OnInit, OnDestroy {
             startWith(''),
             map(value => this._filterSystems(value || ''))
         )
+        
     }
 
      ngOnDestroy(): void {

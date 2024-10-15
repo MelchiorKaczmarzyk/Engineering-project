@@ -82,7 +82,7 @@
     <h2>Players:</h2>
     <mat-divider></mat-divider>
     <br>
-    <div *ngIf="noPlayers == false">
+    <div *ngIf="initialLength > 0">
       <table cellspacing="0">
         <tbody>
           <tr class="specialPlayerInfo">
@@ -92,10 +92,7 @@
             <td class="specialPlayerInfo">
               <h3>{{user.userName}}</h3>
             </td>
-            <td class="specialPlayerInfo">
-              <h3>{{user.email}}</h3>
-            </td>
-            <td class="specialPlayerInfo">
+            <td class="specialDiscordIcon">
               <img class="discordIcon" src="assets\discordImage.png">
             </td>
             <td class="specialPlayerInfo">
@@ -109,9 +106,6 @@
           <td class="playerInfo">
             <h3>{{player.name}}</h3>
           </td>
-          <td class="playerInfo">
-            <h3>{{player.email}}</h3>
-          </td>
           <td class="discordIcon">
             <img class="discordIcon" src="assets\discordImage.png">
           </td>
@@ -121,9 +115,9 @@
         </tr>
       </tbody>
       </table>
-      </div>
-  <div *ngIf="noPlayers==true">
-  No other player has joined this session yet. Maybe come back and check a little later ;)
+    </div>
+  <div *ngIf="initialLength == 0">
+    No other player has joined this session yet. Maybe come back and check a little later ;)
   </div>
     <br>
     <br>

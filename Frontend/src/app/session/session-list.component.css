@@ -14,7 +14,12 @@ table.center {
 
   .sessionList {
     width: 90%;
-    padding-right: 40px
+    padding-right: 40px;
+    
+  }
+
+  .lol {
+    overflow-x: hidden;
   }
 
   button {
@@ -83,8 +88,15 @@ img.circle {
 }
 
   @media screen and (max-width:650px) {
+    .example-card {
+      max-width: 300px;
+    }
     .smallScreen  { display: block; visibility: visible; }
     .bigScreen { display: none !important; }
-    .currentFilters { margin-left: 0px; width: 400px;}
+    .currentFilters { margin-left: 0px; width: 300px;}
+    .tableButton {padding: 0%; margin: 0%; font-size: smaller;}
+    .example-card {
+      max-width: 300px;
+    }
 }
 

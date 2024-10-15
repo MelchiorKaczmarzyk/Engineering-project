@@ -83,7 +83,7 @@
         <mat-label *ngIf="!emptyDescription" color="primary">
             Description
         </mat-label>
-        <textarea matInput rows="20" cols="400" placeholder="" name="system" [(ngModel)]="description"></textarea>
+        <textarea matInput rows="20" cols="300" placeholder="" name="system" [(ngModel)]="description"></textarea>
     </mat-form-field>
     <br>
     <button mat-flat-button color="accent" type="button" (click)="onSubmitClicked()"> Submit </button> 
@@ -135,5 +135,16 @@
     </mat-autocomplete>
     </mat-form-field>
     </form>
-    <button mat-flat-button color="accent" type="button" (click)="addSystemThenSubmit()"> Create session </button> 
+    <table>
+        <tr>
+            <th>
+                <button mat-flat-button color="primary" type="button" (click)="setState0()"> Cancel </button> 
+            </th>
+            <th></th>
+            <th>
+                <button mat-flat-button color="accent" type="button" (click)="addSystemThenSubmit()"> Create session </button> 
+            </th>
+        </tr>
+    </table>
+    
 </div>

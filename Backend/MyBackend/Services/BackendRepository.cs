@@ -16,6 +16,12 @@ namespace MyBackend.Services
             _userManager = userManager;
             _context = context;
         }
+
+        public async Task<Gm> GetGmAsyncName(string name)
+        {
+            return await _context.Gms.FirstOrDefaultAsync(
+                lol => lol.Name.Equals(name));
+        }
         public async Task<Gm> GetGmAsync(string id)
         {
             return await _context.Gms.FirstOrDefaultAsync(
@@ -84,7 +90,7 @@ namespace MyBackend.Services
 
         public void AddPlayerToSession(string sessionTitle, string playerName)
         {
-            var session = _context.Sessions.FirstOrDefault(s =>  s.Title.Equals(sessionTitle));
+            var session = _context.Sessions.Include(s => s.Players).FirstOrDefault(s =>  s.Title.Equals(sessionTitle));
             var player = _context.Players.FirstOrDefault(p =>  p.Name.Equals(playerName));
 
             session.Players.Add(player);
@@ -135,7 +141,6 @@ namespace MyBackend.Services
         {
             //znajdź użytkownika
             //oceń czy to gracz czy Gm
-
             var user =_context.Users.FirstOrDefault(u => u.UserName.Equals(userName));
             if (user != null)
             {
@@ -149,16 +154,16 @@ namespace MyBackend.Services
                 {
                     //Musisz zadbać o to, żeby kiedy pobierasz rekord z bazy, to żeby miał wszystkie pola!
                     //            tu => \/
-                    var gm = _context.Gms.FirstOrDefault(g => g.Id == user.GmOrPlayerId);
+                    var gm = _context.Gms.Include(g => g.Sessions).FirstOrDefault(g => g.Id == user.GmOrPlayerId);
                     if(gm != null)
                     {
-                        var sessions = _context.Sessions.Where(s => s.GmId == gm.Id);
-                        if(sessions.Any())
+                        var sessions = gm.Sessions;
+                        if(sessions.Count() > 0)
                         {
                             foreach (var session in sessions)
                             {
                                 //nwm czy zadziała, porównuje referencje
-                                _context.Remove(session);
+                                var removedSession = _context.Remove(session);
                             }
                         }
                         //nwm czy zadziała, porównuje referencje
@@ -175,12 +180,12 @@ namespace MyBackend.Services
                 //usuń użytkownika
                 if (user.Role.Equals("Player"))
                 {
-                    var player = _context.Players.FirstOrDefault(p => p.Id == user.GmOrPlayerId);
+                    var sessionsFromRemove = new List<Session>();
+                    var player = _context.Players.Include(p => p.Sessions).FirstOrDefault(p => p.Id == user.GmOrPlayerId);
                     if (player != null)
                     {
-                        var sessions = _context.Sessions.Where(s => 
-                            findSessionsWithPlayer(s,player));
-                        if(sessions.Any())
+                        var sessions = player.Sessions;
+                        if (sessions.Count() > 0)
                         {
                             foreach (var session in sessions)
                             {
@@ -188,11 +193,17 @@ namespace MyBackend.Services
                                 {
                                     if (p.Id.Equals(player.Id))
                                     {
-                                        //nwm czy zadziała, porównuje referencje
-                                        var playerRemovedFromSession = session.Players.Remove(p);
+                                        sessionsFromRemove.Add(session);
+                                        break;
+                                        //var playerRemovedFromSession = session.Players.Remove(p);
                                     }
                                 }
-                                var deletedSession = _context.Remove(session);
+                                //var deletedSession = _context.Remove(session);
+                            }
+
+                            foreach (var session in sessionsFromRemove)
+                            {
+                                var playerRemovedFromSession = session.Players.Remove(player);
                             }
                         }
                         //nwm czy zadziała, porównuje referencje
@@ -211,6 +222,10 @@ namespace MyBackend.Services
                 {
                     return true;
                 }
+                else
+                {
+                    continue;
+                }
             }
             return false;
         }
@@ -218,7 +233,6 @@ namespace MyBackend.Services
         public async void DeleteSession(string sessionTitle)
         {
             var session = await _context.Sessions.FirstOrDefaultAsync(s => s.Title == sessionTitle);
-            //nwm czy usunie, bo porównuje referencje
             _context.Sessions.Remove(session);
             _context.SaveChanges();
         }

@@ -20,7 +20,7 @@ namespace MyBackend.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly FileExtensionContentTypeProvider _fileExtentionContentTypeProvider;
-        public SessionsController(IBackendRepository repos, IMapper mapper, 
+        public SessionsController(IBackendRepository repos, IMapper mapper,
             UserManager<User> userManager, SignInManager<User> signInManager,
             FileExtensionContentTypeProvider fileExtensionContentTypeProvider)
         {
@@ -45,7 +45,7 @@ namespace MyBackend.Controllers
         {
             var sessions = await _repos.GetSessionsAsync();
             var session = sessions.FirstOrDefault(s => s.Id.Equals(sessionId));
-            if(session==null)
+            if (session == null)
             {
                 return NotFound();
             }
@@ -55,10 +55,17 @@ namespace MyBackend.Controllers
         [HttpGet("sessionService")]
         public async Task<ActionResult<IEnumerable<SessionForService>>> GetSessionsForService()
         {
-            var sessions = await _repos.GetSessionsAsync();
-            var result = _mapper.Map<IEnumerable<SessionForService>>(sessions).Where(s =>
-                s.CurrentNumberOfPlayers < s.MaxNumberOfPlayers);
-            return Ok(result);
+            try
+            {
+                var sessions = await _repos.GetSessionsAsync();
+                var result = _mapper.Map<IEnumerable<SessionForService>>(sessions);
+                //.Where(s => s.CurrentNumberOfPlayers < s.MaxNumberOfPlayers)
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("playerService")]
@@ -82,12 +89,12 @@ namespace MyBackend.Controllers
             var gm = _repos.GetGmAsync(session.GmId).Result;
             var gmUser = _repos.GetUserByGmOrPlayerId(gm.Id.ToString()).Result;
             var gmPicturePath = gmUser.ProfilePicturePath;
-            if(session==null) 
-            { 
+            if (session == null)
+            {
                 return NotFound();
-            
+
             }
-            if (!System.IO.File.Exists(session.PicturePath) || 
+            if (!System.IO.File.Exists(session.PicturePath) ||
                 !System.IO.File.Exists(gmPicturePath))
             {
                 return NotFound();
@@ -134,10 +141,15 @@ namespace MyBackend.Controllers
 
                 var systems = await _repos.GetSystemsAsync();
                 var index = systems.FirstOrDefault(s => s.Name == sessionPosted.System.Name);
-                if(index == null)
+                if (index == null)
                 {
                     errorHappened = true;
                     result.IsSystemNew = true;
+                }
+                else
+                {
+                    if (index.Name.Equals(""))
+                        errorHappened = true;
                 }
 
                 if (sessionPosted.Title.Equals(""))
@@ -147,12 +159,12 @@ namespace MyBackend.Controllers
                 }
 
                 var title = await _repos.GetSessionAsyncTitle(sessionPosted.Title);
-                if(title  != null)
+                if (title != null)
                 {
                     errorHappened = true;
                     result.IsTitleUnique = false;
                 }
-                if(errorHappened)
+                if (errorHappened)
                     return Ok(result);
 
                 var gms = await _repos.GetGmsAsync();
@@ -167,7 +179,7 @@ namespace MyBackend.Controllers
                     Directory.GetCurrentDirectory(), $"SessionPictures\\uploaded_file_{Guid.NewGuid()}.png");
 
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
-                
+
                 var sessionToAdd = new Session
                 {
                     Id = Guid.NewGuid().ToString("N"),
@@ -182,15 +194,15 @@ namespace MyBackend.Controllers
                     PicturePath = filePath,
                     MaxNumberOfPlayers = sessionPosted.MaxNumberOfPlayers,
                 };
-                 _repos.AddSession(sessionToAdd);
+                _repos.AddSession(sessionToAdd);
                 return Ok();
             }
 
-            catch (Exception) 
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error creating new session record");
-            }     
+            }
         }
 
         [HttpPatch("addPlayerToSession")]
@@ -212,12 +224,22 @@ namespace MyBackend.Controllers
         public async Task<ActionResult> DeleteSession(string sessionTitle)
         {
             if (string.IsNullOrEmpty(sessionTitle))
-            { 
+            {
                 return BadRequest();
             }
-            
+
             _repos.DeleteSession(sessionTitle);
             return Ok();
+        }
+
+        [HttpGet("testDeploy")]
+        public ActionResult TestDeploy()
+        {
+            var response = new
+            {
+                text = "Requests from deployed app work for deployed backend"
+            };
+            return Ok(response);
         }
     }
 }

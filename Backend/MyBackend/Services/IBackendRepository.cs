@@ -7,6 +7,7 @@ namespace MyBackend.Services
         Task<IEnumerable<Session>>? GetSessionsAsync();
         Task<Session> GetSessionAsyncTitle(string title);
         Task<IEnumerable<Gm>>? GetGmsAsync();
+        Task<Gm> GetGmAsyncName(string name);
         Task<IEnumerable<Player>>? GetPlayersAsync();
         Task<IEnumerable<GameSystem>>? GetSystemsAsync();
 

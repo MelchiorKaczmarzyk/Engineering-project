@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="ProfilePictures\" />
+    <Folder Include="SessionPictures\" />
   </ItemGroup>
 
 </Project>

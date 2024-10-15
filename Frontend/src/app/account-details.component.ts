@@ -142,8 +142,7 @@ export class AccountDetails implements OnInit, OnDestroy{
     updatePicture(){
         this.wrongPicture = false
         var profilePicDisplayValue
-        if(this.profilePicDisplay == undefined || this.profilePicDisplay == null ||
-            !this.profilePicDisplay.includes("data:image/png;base64")
+        if(this.profilePicDisplay == undefined || this.profilePicDisplay == null
         )
             profilePicDisplayValue = ""
         else

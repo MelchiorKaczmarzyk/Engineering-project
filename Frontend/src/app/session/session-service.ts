@@ -8,6 +8,7 @@ import { Session } from "./Session"
     providedIn: 'root'
 })
 export class SessionsService {
+    //lokalny ip, musisz go sprawdzić ipconfig przed prezentacją
     private sessionsUrl = "https://localhost:7271/api/sessions/sessionService"
 
     constructor(private http: HttpClient) {}

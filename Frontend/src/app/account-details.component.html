@@ -113,7 +113,7 @@
                        User name
                    </mat-label>
                    <mat-label *ngIf="!uniqueUserName" class="red">
-                       User name should be unique
+                       User name is not unique
                    </mat-label>
                    <mat-label *ngIf="emptyUserName"
                     class="red">
@@ -164,7 +164,7 @@
                            Email
                        </mat-label>
                        <mat-label *ngIf="!uniqueEmail" class="red">
-                           Email should be unique
+                           Email is not unique
                        </mat-label>
                        <mat-label *ngIf="emptyEmail"
                         class="red">
@@ -242,7 +242,7 @@
     <tr>
         <th class="toLeft">
             <mat-label *ngIf="wrongPicture" class="red">
-                Select a .png file
+                Select an image
             </mat-label>
             <h3>Choose a new profile picture</h3>
         </th>
@@ -361,7 +361,7 @@
             </th>
             <th class="toLeft">
                 <button mat-flat-button class="delete" type="button" (click)="deleteAccount()">
-                    Delete Account</button>
+                    Delete</button>
             </th>
         </tr>
     </table>
@@ -412,4 +412,10 @@
 
 <div *ngIf="componentState==15">
     <h3>Your Discord contact info have been updated succesfully c:</h3>
+    <br>
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    <button mat-flat-button color="primary" type="button" 
+        (click)="returnToDetails()">Return to account</button>
 </div>

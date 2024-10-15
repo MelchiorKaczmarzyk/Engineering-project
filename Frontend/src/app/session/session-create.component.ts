@@ -140,7 +140,7 @@ export class SessionCreate implements OnDestroy {
             this.tooLongTags = true
         if(this.maxNumberOfPlayers < 1)
             this.emptyNumberOfPlayers = true
-        if(this.sessionPicDisplay == "" || !this.sessionPicDisplay.includes("data:image/png;base64")){
+        if(this.sessionPicDisplay == ""){
                 this.wrongPicture = true
                 this.sessionPicDisplay = ""
         }
