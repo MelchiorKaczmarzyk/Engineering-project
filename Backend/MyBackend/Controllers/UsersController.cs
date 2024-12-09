@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,9 @@ using System.Net.Mail;
 using System.Text;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
+using SQLitePCL;
 
 namespace MyBackend.Controllers
 {
@@ -25,14 +29,17 @@ namespace MyBackend.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly FileExtensionContentTypeProvider _fileExtentionContentTypeProvider;
+        private readonly MailService _mailService;
         public UsersController(IBackendRepository repos, IMapper mapper, 
             UserManager<User> userManager, SignInManager<User> signInManager,
-            FileExtensionContentTypeProvider fileExtensionContentTypeProvider)
+            FileExtensionContentTypeProvider fileExtensionContentTypeProvider, 
+            IOptions<MailService> mailService)
         {
             _repos = repos;
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _mailService = mailService.Value;
             _fileExtentionContentTypeProvider = fileExtensionContentTypeProvider ??
                 throw new System.ArgumentNullException(
                     nameof(fileExtensionContentTypeProvider));
@@ -517,6 +524,114 @@ namespace MyBackend.Controllers
                 return BadRequest();
             }
 
+        }
+
+        
+        [HttpPatch("password")]
+        public async Task<ActionResult> PathPassword(PatchPasswordBody body)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(body.Email);
+                if (user == null)
+                    return BadRequest();
+                try
+                {
+                    var token = await _userManager.GetAuthenticationTokenAsync(
+                    user, "Application", "PasswordReset");
+                    await _userManager.ResetPasswordAsync(user, token, body.NewPassword);
+                    _repos.SaveContextChanges();
+                    return Ok(new
+                    {
+                        PasswordIsCorrect = true
+                    });
+                }
+                catch
+                {
+                    return Ok(new
+                    {
+                        PasswordIsCorrect = false
+                    });
+                }
+
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            
+        }
+        [HttpPost("checkToken")]
+        public async Task<ActionResult> CheckToken(PatchPasswordBody body)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(body.Email);
+                if (user == null)
+                    return BadRequest();
+                var token = await _userManager.GetAuthenticationTokenAsync(
+                    user, "Application", "PasswordReset");
+                if (token == null)
+                    return BadRequest();
+                var shortCode = Convert.ToBase64String(Encoding.UTF8.GetBytes(token)).Substring(0, 6);
+
+                if (shortCode == body.ResetCode)
+                {
+                    try
+                    {
+                        return Ok(new
+                        {
+                            CodeIsCorrect = true
+                        });
+                    }
+                    catch
+                    {
+                        return BadRequest();
+                    }
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        CodeIsCorrect = false
+                    });
+                }
+
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        
+
+        [HttpPost("sendMail")]
+        public async Task<ActionResult> SendMail(MailModel body)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(body.EmailTo);
+                if (body == null)
+                    return BadRequest();
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await _userManager.SetAuthenticationTokenAsync(
+                    user,"Application", "PasswordReset", token);
+
+                var shortCode = Convert.ToBase64String(Encoding.UTF8.GetBytes(token)).Substring(0, 6);
+
+                body.EmailBody = $"Your password reset code is: {shortCode}";
+                body.EmailSubcject = "Password reset";
+
+                _mailService.SendMailAsync(body);
+
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("user")]

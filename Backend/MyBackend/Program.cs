@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.StaticFiles;
+using MyBackend;
 using MyBackend.DbContext;
 using MyBackend.Entities;
 using MyBackend.Services;
@@ -35,10 +36,14 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDbContext<MyDbContext>();
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MyDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MyDbContext>()
+    .AddDefaultTokenProviders();
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
+   opt.TokenLifespan = TimeSpan.FromHours(2));
 builder.Services.AddScoped<IBackendRepository, BackendRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+ builder.Services.AddScoped<IMailService, MailService>();
 
 var app = builder.Build();
 

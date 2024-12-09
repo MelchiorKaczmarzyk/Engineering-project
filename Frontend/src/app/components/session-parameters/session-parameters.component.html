@@ -1,0 +1,153 @@
+<div class="horizontal-center">
+<h2>Manage Session parameters</h2>
+<hr>
+<br>
+<h3>Systems</h3>
+<mat-divider></mat-divider>
+<br>
+<form>
+    <mat-form-field color="primary">
+        <mat-label *ngIf="!emptyAddSystem && !addedSystem" color="primary">
+            System to add
+        </mat-label>
+        <mat-label *ngIf="emptyAddSystem" class="red">
+            Enter system name
+        </mat-label>
+        <mat-label *ngIf="addedSystem" class="green">
+            Added {{previousAddSystem}}
+        </mat-label>
+        <input type="text" matInput placeholder="" name="tag" [(ngModel)]="systemToAdd">
+    </mat-form-field>
+    <button mat-flat-button color="accent" (click)="addSystem()"> Add </button>
+    <br>
+    <mat-form-field color="primary" color="primary">
+        <mat-label *ngIf="!emptyRemoveSystem && !removedSystem">
+            System to remove
+        </mat-label>
+        <mat-label *ngIf="emptyRemoveSystem" class="red">
+            Choose a system
+        </mat-label>
+        <mat-label *ngIf="addedSystem" class="green">
+            Removed {{previousRemoveSystem}}
+        </mat-label>
+    <!--<input type="text" matInput placeholder="" name="tag" [(ngModel)]="systemToRemove">-->
+        <mat-select name="select" [(ngModel)]="systemToRemove">
+            <mat-option *ngFor="let system of systems" [value]="system.name">
+              {{system.name}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="removeSystem()"> Remove </button>
+</form>
+<br>
+<h3>Tags</h3>
+<mat-divider></mat-divider>
+<br>
+<form>
+    <mat-form-field color="primary">
+        <mat-label *ngIf="!emptyAddTag && !addedTag" color="primary">
+            Tag to add
+        </mat-label>
+        <mat-label *ngIf="emptyAddTag" class="red">
+            Enter a tag
+        </mat-label>
+        <mat-label *ngIf="addedTag" class="green">
+            Added {{previousAddTag}}
+        </mat-label>
+        <input type="text" matInput placeholder="" name="tag" [(ngModel)]="tagToAdd">
+    </mat-form-field>
+    <button mat-flat-button color="accent" (click)="addTag()"> Add </button>
+    <br>
+    <mat-form-field color="primary" color="primary">
+        <mat-label *ngIf="!emptyRemoveTag && !removedTag">
+            Tag to remove
+        </mat-label>
+        <mat-label *ngIf="emptyRemoveTag" class="red">
+            Choose a tag
+        </mat-label>
+        <mat-label *ngIf="addedTag" class="green">
+            Removed {{previousRemoveTag}}
+        </mat-label>
+        <mat-select name="select" [(ngModel)]="tagToRemove">
+            <mat-option *ngFor="let tag of tags" [value]="tag.name">
+              {{tag.name}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="removeTag()"> Remove </button>
+</form>
+<br>
+<h3>Triggers</h3>
+<mat-divider></mat-divider>
+<br>
+<form>
+    <mat-form-field color="primary">
+        <mat-label *ngIf="!emptyAddTrigger && !addedTrigger" color="primary">
+            Trigger to add
+        </mat-label>
+        <mat-label *ngIf="emptyAddTrigger" class="red">
+            Enter a trigger
+        </mat-label>
+        <mat-label *ngIf="addedTrigger" class="green">
+            Added {{previousAddTag}}
+        </mat-label>
+        <input type="text" matInput placeholder="" name="tag" [(ngModel)]="triggerToAdd">
+    </mat-form-field>
+    <button mat-flat-button color="accent" (click)="addTrigger()"> Add </button>
+    <br>
+    <mat-form-field color="primary" color="primary">
+        <mat-label *ngIf="!emptyRemoveTrigger && !removedTrigger">
+            Trigger to remove
+        </mat-label>
+        <mat-label *ngIf="emptyRemoveTrigger" class="red">
+            Choose a trigger
+        </mat-label>
+        <mat-label *ngIf="addedTrigger" class="green">
+            Removed {{previousRemoveTag}} 
+        </mat-label>
+        <mat-select name="select" [(ngModel)]="triggerToRemove">
+            <mat-option *ngFor="let trigger of triggers" [value]="trigger.name">
+              {{trigger.name}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="removeTrigger()"> Remove </button>
+</form>
+<br>
+<h3>Virtual table tops</h3>
+<mat-divider></mat-divider>
+<br>
+<form>
+    <mat-form-field color="primary">
+        <mat-label *ngIf="!emptyAddVtt && !addedVtt" color="primary">
+            Vtt to add
+        </mat-label>
+        <mat-label *ngIf="emptyAddVtt" class="red">
+            Enter vtt name
+        </mat-label>
+        <mat-label *ngIf="addedVtt" class="green">
+            Added {{previousAddVtt}}
+        </mat-label>
+        <input type="text" matInput placeholder="" name="tag" [(ngModel)]="vttToAdd">
+    </mat-form-field>
+    <button mat-flat-button color="accent" (click)="addVtt()"> Add </button>
+    <br>
+    <mat-form-field color="primary" color="primary">
+        <mat-label *ngIf="!emptyRemoveVtt && !removedVtt">
+            Vtt to remove
+        </mat-label>
+        <mat-label *ngIf="emptyRemoveTrigger" class="red">
+            Choose a Vtt
+        </mat-label>
+        <mat-label *ngIf="addedTrigger" class="green">
+            Removed {{previousRemoveVtt}} 
+        </mat-label>
+        <mat-select name="select" [(ngModel)]="vttToRemove">
+            <mat-option *ngFor="let vtt of vtts" [value]="vtt.name">
+              {{vtt.name}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="removeVtt()"> Remove </button>
+</form>
+</div>

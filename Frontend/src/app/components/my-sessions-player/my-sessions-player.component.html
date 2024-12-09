@@ -1,5 +1,5 @@
 <div *ngIf="componentState==0">
-<h2>Your sessions</h2>
+<h2 class="horizontal-center">Your sessions</h2>
 <hr>
 <table mat-table class="sessionList" [dataSource]="filteredSessions">
     <ng-container matColumnDef="Gm">
@@ -28,10 +28,10 @@
   </table>
   </div>
   
-  <div *ngIf="componentState==1">
+  <div *ngIf="componentState==1" class="horizontal-center">
     <h2>Session details</h2>
     <hr>
-    <mat-card class="example-card">
+    <mat-card class="horizontal-center-card example-card">
       <mat-card-header>
         <img mat-card-avatar class="gmImage" src={{gmForSession.profilePicture}}>
         <mat-card-title>{{sessionRow.title}}</mat-card-title>
@@ -39,6 +39,38 @@
         <mat-card-subtitle>{{gmForSession.name}}</mat-card-subtitle>
         <mat-card-subtitle><br></mat-card-subtitle>
       </mat-card-header>
+      <mat-card-content> 
+        <table>
+          <tr *ngIf="sessionRow.isRemote">
+            <th class="pink">
+              Online session
+            </th>
+          </tr>
+          <tr *ngIf="!sessionRow.isRemote">
+            <th class="pink">
+              In person session
+            </th>
+          </tr>
+          <tr class="justText">
+            <th class="justText">
+              Tags:
+            </th>
+            <th></th>
+            <th class="justTextTop">
+              {{sessionRow.tags}}
+            </th>
+          </tr>
+          <tr class="justText">
+            <th class="justText">
+              Triggers:
+            </th>
+            <th></th>
+            <th class="justTextTop">
+              {{sessionRow.triggers}}
+            </th>
+          </tr>
+        </table>
+      </mat-card-content>
       <br>
       <img mat-card-image src={{sessionPicture}}>
       <br>
@@ -48,22 +80,45 @@
           {{sessionRow.description}}
         </p>
       </mat-card-content>
-      <mat-card-footer>
-        <br>
+      <mat-card-content>
         <table>
           <tr class="justText">
             <th class="justText">
-              Number of players
+              Number of players:
             </th>
-            <th class="justText">
+            <th class="justTextTop">
               {{sessionRow.currentNumberOfPlayers}}/{{sessionRow.maxNumberOfPlayers}}
+            </th>
+          </tr>
+          <tr class="justText">
+            <th class="justText">
+              Date:
+            </th>
+            <th class="justTextTop">
+              {{month}}/{{day}}/{{year}}
+            </th>
+          </tr>
+          <tr class="justText" *ngIf="sessionRow.isRemote">
+            <th class="justText">
+              VTT:
+            </th>
+            <th class="justTextTop">
+              {{sessionRow.vtt}}
+            </th>
+          </tr>
+          <tr class="justText" *ngIf="!sessionRow.isRemote">
+            <th class="justText">
+              Location:
+            </th>
+            <th class="justTextTop">
+              {{sessionRow.location}}
             </th>
           </tr>
           <tr class="justText">
             <th class="justText">
               Email:
             </th>
-            <th class="justText">
+            <th class="justTextTop">
               {{gmForSession.email}}
             </th>
           </tr>
@@ -71,18 +126,18 @@
             <th class="justText">
               Discord:
             </th>
-            <th class="justText">
+            <th class="justTextTop">
               {{gmForSession.discord}}
             </th>
           </tr>
         </table>
-      </mat-card-footer>
+      </mat-card-content>
     </mat-card>
     <br>
     <h2>Players:</h2>
     <mat-divider></mat-divider>
     <br>
-    <div *ngIf="initialLength > 0">
+    <div *ngIf="initialLength > 0" class="horizontal-center">
       <table cellspacing="0">
         <tbody>
           <tr class="specialPlayerInfo">

@@ -1,0 +1,254 @@
+<div *ngIf="componentState==0">
+<h2 class="horizontal-center">Create Session</h2>
+<div>
+<hr>
+<form>
+    <mat-form-field color="primary">
+        <mat-label *ngIf="emptyTitle" class="red">
+            Enter title
+        </mat-label>
+        <mat-label *ngIf="!titleIsUnique" class="red">
+            Title shoud be unique
+        </mat-label>
+        <mat-label *ngIf="tooLongTitle" class="red">
+            Max. 30 characters
+        </mat-label>
+        <mat-label *ngIf="titleIsUnique && !emptyTitle" color="primary">
+            Title
+        </mat-label>
+        <input type="text" matInput placeholder="" name="system" [(ngModel)]="title">
+    </mat-form-field>
+    <br>
+    <mat-form-field color="primary">
+        <mat-label *ngIf="emptySystem" class="red">
+            Enter system
+        </mat-label>
+        <mat-label *ngIf="!emptySystem" color="primary">
+            System
+        </mat-label>
+        <mat-select name="select" [(ngModel)]="systemName">
+          <mat-option *ngFor="let system of systems" [value]="system.name">
+            {{system.name}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <table>
+    <tr>
+        <th>
+        <mat-form-field color="primary">
+        <mat-label *ngIf="tooFewTags" class="red">
+            Too few tags
+        </mat-label>
+        <mat-label *ngIf="!tooFewTags" color="primary">
+            Tags
+        </mat-label>
+        <mat-select name="select" [(ngModel)]="currentTag">
+          <mat-option *ngFor="let tag of filteredTags" [value]="tag.name">
+            {{tag.name}}
+          </mat-option>
+        </mat-select>
+        </mat-form-field>
+        </th>
+        <th>
+            <button mat-flat-button color="accent" type=button (click)="addTag()">
+                Add
+            </button>
+        </th>
+        <th>
+        <mat-form-field class="currentTags" color="primary">
+            <mat-label color="primary">Current tags</mat-label>
+            <input color="primary" matInput placeholder="" [(ngModel)]="tags" name="currentTags" disabled>
+        </mat-form-field> 
+        </th>
+        <th>
+        <button mat-flat-button color="primary" type="button" (click)="clearTags()">
+            Clear
+        </button> 
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <mat-form-field color="primary">
+                <mat-label *ngIf="tooFewTriggers" class="red">
+                    Too few triggers
+                </mat-label>
+                <mat-label *ngIf="!tooFewTriggers" color="primary">
+                    Triggers
+                </mat-label>
+                <mat-select name="select" [(ngModel)]="currentTrigger">
+                  <mat-option *ngFor="let trigger of filteredTriggers" [value]="trigger.name">
+                    {{trigger.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </th>
+        <th>
+            <button mat-flat-button color="accent" type=button (click)="addTrigger()">
+                Add
+            </button>
+        </th>
+        <th>
+            <mat-form-field class="currentTriggers" color="primary">
+                <mat-label color="primary">Current triggers</mat-label>
+                <input color="primary" matInput placeholder="" [(ngModel)]="triggers" name="currentTriggers" disabled>
+            </mat-form-field> 
+        </th>
+        <th>
+            <button mat-flat-button color="primary" type="button" (click)="clearTriggers()">
+                Clear
+            </button> 
+        </th>
+    </tr>
+</table>
+    <br>
+    <mat-form-field color="primary">
+        <mat-label *ngIf="emptyNumberOfPlayers" class="red">
+            Enter a number
+        </mat-label>
+        <mat-label *ngIf="!emptyNumberOfPlayers" color="primary">
+            Number of players
+        </mat-label>
+        <input type="number" min="1" step="1" matInput placeholder="" name="system" [(ngModel)]="maxNumberOfPlayers">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill" color="accent" >
+        <mat-label *ngIf="dateIsWrong" class="red">
+            Pick a correct date
+        </mat-label>
+        <mat-label *ngIf="!dateIsWrong" color="primary">
+            Date
+        </mat-label>
+        <input matInput name="date-picker" [matDatepicker]="picker" [(ngModel)]="date" [readonly]="true" (dateChange)="onDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    <br>
+    <br>
+    <mat-radio-group name="radio-group" class="my-radio-group" [(ngModel)]="isSessionOnline">
+        <mat-radio-button class="my-radio-button" selected="true" [value]="false">
+            In-person
+        </mat-radio-button>
+        <mat-radio-button class="my-radio-button" [value]="true">
+            Online
+        </mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <mat-form-field name="select-vtt" *ngIf="isSessionOnline">
+        <mat-label name="vtt-label-er" *ngIf="vttIsWrong" class="red">
+            Choose Virtual tabletop
+        </mat-label>
+        <mat-label name="vtt-label" *ngIf="!vttIsWrong" color="primary">
+            Virtual tabletop
+        </mat-label>
+        <mat-select name="select" [(ngModel)]="currentVtt">
+          <mat-option *ngFor="let vtt of allVtts" [value]="vtt.name">
+            {{vtt.name}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field name="select-location" *ngIf="!isSessionOnline">
+        <mat-label *ngIf="locationIsWrong" class="red">
+            Enter location
+        </mat-label>
+        <mat-label *ngIf="!locationIsWrong" color="primary">
+            Location: Town, locale...
+        </mat-label>
+        <input type="text" matInput placeholder="" name="system" [(ngModel)]="location">
+    </mat-form-field>
+    <br>
+    <br>
+    <label id="custom-file-upload-label" class="custom-file-upload" for="imgInp" *ngIf="!wrongPicture"
+    color="primary">
+        Session picture
+    </label>
+    <label id="custom-file-upload-label" class="custom-file-upload-red" *ngIf="wrongPicture" 
+    for="imgInp">
+        Choose an image
+    </label>
+    <br>
+    <input id="imgInp" type="file" name="file" accept="image/*" (change)="onFileChanged($event)">
+    <br>
+    <div *ngIf="showImage == true">
+        <img class="sessionImage" src={{sessionPicDisplay}}/>
+    </div>
+    <mat-form-field color="primary" [style.width.px]=600 [style.height.px]=300>
+        <mat-label *ngIf="emptyDescription" class="red">
+            Write a description
+        </mat-label>
+        <mat-label *ngIf="tooLongDescription" class="red">
+            Max. 2000 characters
+        </mat-label>
+        <mat-label *ngIf="!emptyDescription" color="primary">
+            Description
+        </mat-label>
+        <textarea matInput rows="20" cols="300" placeholder="" name="system" [(ngModel)]="description"></textarea>
+    </mat-form-field>
+    <br>
+    <button mat-flat-button color="accent" type="button" (click)="onSubmitClicked()"> Submit </button> 
+</form>
+</div> 
+</div>
+
+<div *ngIf="componentState==1" class="horizontal-center">
+    <h2>Session created successfuly!</h2>
+    <hr>
+    <h3>Feel free to leave this page</h3>
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    <button mat-flat-button color="accent" type="button" (click)="setState0()">Create another!</button>
+</div>
+
+<div *ngIf="componentState==2" class="horizontal-center">
+    <h2>Failed to create session :c</h2>
+    <hr>
+    Something went wrong. Make sure your internet connection is stable.
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    <button mat-flat-button color="accent" type="button" (click)="setState0()">Return to creating</button>
+</div>
+
+<!--
+<div *ngIf="componentState==3">
+    <h2>New game system detected</h2>
+    <hr>
+    The entered game system was not recognized.
+    <br>
+    Please make sure the game system you are looking for is not present in the list before continuing
+    <br>
+    <form>
+    <mat-form-field color="primary">
+        <mat-label *ngIf="emptySystemAgain" class="red">
+            Pick a system
+        </mat-label>
+        <mat-label *ngIf="tooLongSystemAgain" class="red">
+            Max. 30 characters
+        </mat-label>
+        <mat-label *ngIf="!emptySystemAgain" color="primary">
+            New system
+        </mat-label>
+    <input type="text" matInput placeholder="" name="system" [(ngModel)]="systemName" 
+    [matAutocomplete]="auto" [formControl]="myControl">
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let system of systemsFiltered | async" [value]="system.name">
+            {{system.name}}
+        </mat-option>
+    </mat-autocomplete>
+    </mat-form-field>
+    </form>
+    <table>
+        <tr>
+            <th>
+                <button mat-flat-button color="primary" type="button" (click)="setState0()"> Cancel </button> 
+            </th>
+            <th></th>
+            <th>
+                <button mat-flat-button color="accent" type="button" (click)="addSystemThenSubmit()"> Create session </button> 
+            </th>
+        </tr>
+    </table>
+    
+</div>
+-->

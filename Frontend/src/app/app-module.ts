@@ -2,13 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
-import { HomeComponent } from './home/home.component';
-import { SessionList } from './session/session-list.component';
-import { Navbar } from './navbar/navbar.component';
-import { ClickedOutsideDirective } from './clickOutside.directive';
+import { SessionList } from './components/session-list/session-list.component';
+import { ClickedOutsideDirective } from './directives/click-outside.directive';
 import { App } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SessionCreate } from './session/session-create.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,24 +17,33 @@ import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule, MatAutocompleteTrigger} from '@angular/material/autocomplete'; 
 import {MatDividerModule} from '@angular/material/divider'; 
 import {MatCardModule} from '@angular/material/card'
-import { LoginRegister } from './login-register.component';
 import {MatSelectModule} from '@angular/material/select'
 import { MySessionsGm } from './components/my-sessions-gm/my-sessions-gm.component';
 import { MySessionsPlayer } from './components/my-sessions-player/my-sessions-player.components';
-import { AccountDetails } from './account-details.component';
+import { SessionCreate } from './components/session-create/session-create.component';
+import { AccountDetails } from './components/account-details/account-details.component';
+import { LoginRegister } from './components/login-register/login-register.component';
+import {MatPaginatorModule} from '@angular/material/paginator'; 
+import {MatRadioModule} from '@angular/material/radio'; 
+import {MatDatepickerModule} from '@angular/material/datepicker'
+import { MatNativeDateModule } from '@angular/material/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { SessionParameters } from './components/session-parameters/session-parameters.component';
+import { MenageUsers } from './components/manage-users/manage-users.component';
+
 
 @NgModule({
   declarations: [
-    HomeComponent,
     SessionList,
     SessionCreate,
     LoginRegister,
-    Navbar,
     App,
     MySessionsGm,
     MySessionsPlayer,
     AccountDetails,
-    ClickedOutsideDirective
+    ClickedOutsideDirective,
+    SessionParameters,
+    MenageUsers
   ],  
   imports: [  
     BrowserModule,
@@ -56,17 +62,22 @@ import { AccountDetails } from './account-details.component';
     ReactiveFormsModule,
     MatDividerModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FlexLayoutModule,
   ],
   bootstrap: [
     App,
     SessionList,
     SessionCreate,
     LoginRegister,
-    Navbar
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    MatDatepickerModule
   ]
 })
 export class AppModule { }

@@ -1,13 +1,14 @@
 import { Component } from "@angular/core";
-import { Session } from "../../session/Session";
+import { Session } from "../../models/Session";
 import { Observable, Subscription, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { SessionsService } from "../../session/session-service";
-import { UserService } from "../../UserService";
-import { PlayerForSession } from "../../player/PlayerForSession";
-import { GmForSession } from "../../gm/GmForSession";
-import { UserModel } from "../../UserModel";
-import { PlayerToDisplay } from "../../PlayerToDisplay";
+
+import { UserService } from "../../services/user.service";
+import { PlayerForSession } from "../../models/PlayerForSession";
+import { GmForSession } from "../../models/GmForSession";
+import { UserModel } from "../../models/User";
+import { PlayerToDisplay } from "../../models/PlayerToDisplay";
+import { SessionsService } from "../../services/session.service";
 
 @Component({
     selector: "my-sessions-player",
@@ -41,8 +42,16 @@ export class MySessionsPlayer {
     playersForSessionLess : PlayerToDisplay[] = []
     noPlayers : boolean = true
     initialLength : number = 0
+
+    day : number = 0
+    month : number = 0
+    year : number = 0
     displaySessionDetails(row: Session) {
         this.sessionRow = row
+        let sessionRowDate = new Date(Number.parseInt(this.sessionRow.date))
+        this.day = sessionRowDate.getDate()
+        this.month = sessionRowDate.getMonth()+1
+        this.year = sessionRowDate.getFullYear()
         this.componentState = 1
         console.log(this.sessionRow)
         if(this.userService.userIsLoggedIn)

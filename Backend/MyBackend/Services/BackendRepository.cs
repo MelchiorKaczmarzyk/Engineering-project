@@ -237,5 +237,58 @@ namespace MyBackend.Services
             _context.SaveChanges();
         }
 
+        public async void DeleteTag(string tagName)
+        {
+            var tag = await _context.Tags.FirstOrDefaultAsync(t => t.Name == tagName);
+            _context.Tags.Remove(tag);
+            _context.SaveChanges();
+        }
+        public async void DeleteTrigger(string triggerName)
+        {
+            var trigger = await _context.Triggers.FirstOrDefaultAsync(t => t.Name == triggerName);
+            _context.Triggers.Remove(trigger);
+            _context.SaveChanges();
+        }
+        public async void DeleteVtt(string vttName)
+        {
+            var vtt = await _context.Vtts.FirstOrDefaultAsync(v => v.Name == vttName);
+            _context.Vtts.Remove(vtt);
+            _context.SaveChanges();
+        }
+        public async void DeleteSystem(string systemName)
+        {
+            var system = await _context.Systems.FirstOrDefaultAsync(s => s.Name == systemName);
+            _context.Systems.Remove(system);
+            _context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<Tag>>? GetTagsAsync()
+        {
+            return await _context.Tags.ToListAsync();
+        }
+
+        public void AddTag(Tag tag)
+        {
+             _context.Tags.Add(tag);
+        }
+        public void AddTrigger(Trigger trigger)
+        {
+            _context.Triggers.Add(trigger);
+        }
+        public void AddVtt(Vtt Vtt)
+        {
+            _context.Vtts.Add(Vtt);
+        }
+
+        public async Task<IEnumerable<Trigger>>? GetTriggersAsync()
+        {
+            return await _context.Triggers.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Vtt>>? GetVttsAsync()
+        {
+            return await _context.Vtts.ToListAsync();
+        }
+
     }
 }

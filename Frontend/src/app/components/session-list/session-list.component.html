@@ -1,0 +1,483 @@
+<div class="screen">
+<div *ngIf="componentState == 0">
+<div class="bigScreen">
+  <h2 class="horizontal-center">Explore</h2>
+  <hr>
+  <form>
+    <table>
+      <tr>
+        <mat-form-field color="primary">
+          <mat-label color="primary">Title</mat-label>
+          <input type="text" color="primary" matInput placeholder="" [(ngModel)]="filterTitle" (change)="filterSessions()" name="filterTitle">
+        </mat-form-field> 
+      </tr>
+      <tr>
+        <th>
+          <mat-form-field color="primary">
+          <mat-label color="primary">Gm</mat-label>
+          <input color="primary" matInput placeholder="" [(ngModel)]="filterGm" name="filterGm">
+          </mat-form-field> 
+        </th>
+        <th> 
+          <button mat-flat-button color="accent" type="button" (click)="onAddGmFilterClicked()">Add filter</button> 
+        </th>
+          <th>
+            <mat-form-field class="currentFilters" color="primary">
+            <mat-label color="primary">Current GM filters</mat-label>
+            <input color="primary" matInput placeholder="" [(ngModel)]="filtersDisplayedGm" name="filterGmCurrent" disabled>
+            </mat-form-field> 
+          </th>
+          <th> 
+            <button mat-flat-button color="primary" type="button" (click)="onClearGmFiltersClicked()">Clear filters</button> 
+          </th>
+      </tr>
+      <tr>
+        <th>
+          <mat-form-field color="primary">
+            <mat-label color="primary">
+              System
+            </mat-label>
+            <mat-select name="select" [(ngModel)]="filterSystem">
+              <mat-option *ngFor="let system of systems" [value]="system.name">
+                {{system.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </th>
+        <!--
+        <th>
+          <mat-form-field color="primary">
+          <mat-label color="primary">System</mat-label>
+          <input type="text" color="primary" matInput placeholder="" [(ngModel)]="filterSystem" 
+          name="filterSystem" [matAutocomplete]="auto" [formControl]="myControl">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let system of systemsFiltered | async" [value]="system.name">
+                  {{system.name}}
+              </mat-option>
+            </mat-autocomplete>  
+        </mat-form-field> 
+        </th>
+        -->
+        <th> 
+          <button mat-flat-button color="accent" type=button (click)="onAddSystemFilterClicked()">Add filter</button> 
+        </th>
+        <th>
+          <mat-form-field class="currentFilters" color="primary">
+          <mat-label color="primary">Current system filters</mat-label>
+          <input color="primary" matInput placeholder="" [(ngModel)]="fitlersDisplayedSystem" name="filterSystemCurrent" disabled>
+          </mat-form-field> 
+        </th>
+        <th> 
+          <button mat-flat-button color="primary" type="button" (click)="onClearSystemFiltersClicked()">Clear filters</button> 
+        </th>
+    </tr>
+    <tr>
+      <th>
+        <!--
+        <mat-form-field color="primary">
+          <mat-label color="primary">Tags</mat-label>
+          <input type="text" color="primary" matInput placeholder="" [(ngModel)]="filterTag" name="filterTag">
+        </mat-form-field> 
+        -->
+        <mat-form-field color="primary">
+          <mat-label color="primary">
+            Tags
+          </mat-label>
+          <mat-select name="select" [(ngModel)]="filterTag">
+            <mat-option *ngFor="let tag of filteredTags" [value]="tag.name">
+              {{tag.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </th>
+      <th>
+        <button mat-flat-button color="accent" type="button" (click)="onAddTagFilterClicked()">Add filter</button> 
+      </th>
+      <th>
+        <mat-form-field class="currentFilters" color="primary">
+          <mat-label color="primary">Current tags</mat-label>
+          <input color="primary" matInput placeholder="" [(ngModel)]="filtersDisplayedTags" name="filterTagsCurrent" disabled>
+        </mat-form-field> 
+      </th>
+      <th>
+        <button mat-flat-button color="primary" type="button" (click)="onClearTagFiltersClicked()">Clear filters</button> 
+      </th>
+    </tr>
+    <tr>
+      <th>
+        <mat-form-field color="primary">
+          <mat-label color="primary">
+            Triggers
+          </mat-label>
+          <mat-select name="select" [(ngModel)]="currentTrigger">
+            <mat-option *ngFor="let trigger of filteredTriggers" [value]="trigger.name">
+              {{trigger.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </th>
+      <th>
+        <button mat-flat-button color="accent" type="button" (click)="addTriggerFilter()">Add filter</button> 
+      </th>
+      <th>
+        <mat-form-field class="currentFilters" color="primary">
+          <mat-label color="primary">Current triggers</mat-label>
+          <input color="primary" matInput placeholder="" [(ngModel)]="triggers" name="filterTriggersCurrent" disabled>
+        </mat-form-field> 
+      </th>
+      <th>
+        <button mat-flat-button color="primary" type="button" (click)="clearTriggerFilters()">Clear filters</button> 
+      </th>
+    </tr>
+
+  </table>
+  <mat-form-field appearance="fill" color="accent">
+      <mat-label color="primary">
+          Date
+      </mat-label>
+      <input matInput name="date-picker" [matDatepicker]="picker" [(ngModel)]="date" [readonly]="true" (dateChange)="onDateChange($event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+      <mat-radio-group name="radio-group" class="my-radio-group" [(ngModel)]="isSessionOnline" (change)="filterSessions()">
+        <mat-radio-button class="my-radio-button" selected="true" [value]="0" >
+            All
+        </mat-radio-button>
+        <mat-radio-button class="inperson-radio-button" [value]="1" >
+            In-person
+        </mat-radio-button>
+        <mat-radio-button class="my-radio-button" [value]="2" >
+            Online
+        </mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <br>
+    <mat-form-field name="select-vtt" *ngIf="isSessionOnline == 2 || isSessionOnline != 0">
+        <mat-label name="vtt-label-er" *ngIf="vttIsWrong" class="red">
+            Choose Virtual tabletop
+        </mat-label>
+        <mat-label name="vtt-label" *ngIf="!vttIsWrong" color="primary">
+            Virtual tabletop
+        </mat-label>
+        <mat-select name="select" [(ngModel)]="currentVtt">
+          <mat-option *ngFor="let vtt of allVtts" [value]="vtt.name">
+            {{vtt.name}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field name="select-location" *ngIf="isSessionOnline == 1 || isSessionOnline != 0">
+        <mat-label color="primary">
+            Location: Town, locale...
+        </mat-label>
+        <input type="text" matInput placeholder="" name="system" [(ngModel)]="location">
+    </mat-form-field>
+  </form>
+</div>
+
+<div class="smallScreen">
+  <h2>Explore</h2>
+  <hr>
+  <form>
+    <table>
+      <tr>
+        <th>
+          <mat-form-field color="primary">
+          <mat-label color="primary">System</mat-label>
+          <input type="text" color="primary" matInput placeholder="" [(ngModel)]="filterSystem" 
+          name="filterSystem" [matAutocomplete]="auto" [formControl]="myControl">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let system of systemsFiltered | async" [value]="system.name">
+                  {{system.name}}
+              </mat-option>
+            </mat-autocomplete>  
+          </mat-form-field> 
+        </th>
+        <th class="tableButton"> 
+          <button mat-flat-button color="accent" type=button (click)="onAddSystemFilterClicked()">Add</button> 
+        </th>
+        <th class="tableButton"> 
+          <button mat-flat-button color="primary" type="button" (click)="onClearSystemFiltersClicked()">Clear</button> 
+        </th>
+      </tr>
+      </table>
+      <table>
+      <tr>
+        <th>
+          <mat-form-field class="currentFilters" color="primary">
+          <mat-label color="primary">Current system filters</mat-label>
+          <input color="primary" matInput placeholder="" [(ngModel)]="fitlersDisplayedSystem" name="filterSystemCurrent" disabled>
+          </mat-form-field> 
+        </th>
+    </tr>
+    </table>
+    <table>
+    <tr>
+      <th>
+        <mat-form-field color="primary">
+        <mat-label color="primary">Gm</mat-label>
+        <input color="primary" matInput placeholder="" [(ngModel)]="filterGm" name="filterGm">
+        </mat-form-field> 
+      </th>
+      <th class="tableButton"> 
+        <button mat-flat-button color="accent" type="button" (click)="onAddGmFilterClicked()">Add</button> 
+      </th>
+      <th class="tableButton"> 
+        <button mat-flat-button color="primary" type="button" (click)="onClearGmFiltersClicked()">Clear</button> 
+      </th>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>
+          <mat-form-field class="currentFilters" color="primary">
+          <mat-label color="primary">Current GM filters</mat-label>
+          <input color="primary" matInput placeholder="" [(ngModel)]="filtersDisplayedGm" name="filterGmCurrent" disabled>
+          </mat-form-field> 
+        </th>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <th>
+        <mat-form-field color="primary">
+          <mat-label color="primary">Tags</mat-label>
+          <input type="text" color="primary" matInput placeholder="" [(ngModel)]="filterTag" name="filterSystem">
+        </mat-form-field> 
+      </th>
+      <th class="tableButton">
+        <button mat-flat-button color="accent" type="button" (click)="onAddTagFilterClicked()">Add</button> 
+      </th>
+      <th class="tableButton">
+        <button mat-flat-button color="primary" type="button" (click)="onClearTagFiltersClicked()">Clear</button> 
+      </th>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <th>
+        <mat-form-field class="currentFilters" color="primary">
+          <mat-label color="primary">Current tags</mat-label>
+          <input color="primary" matInput placeholder="" [(ngModel)]="filtersDisplayedTags" name="filterGmCurrent" disabled>
+        </mat-form-field> 
+      </th>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <mat-form-field color="primary">
+        <mat-label color="primary">Title</mat-label>
+        <input type="text" color="primary" matInput placeholder="" [(ngModel)]="filterTitle" name="filterSystem"
+        (clickOutside)="filterSessions()">
+      </mat-form-field> 
+    </tr>
+  </table>
+  </form>
+</div>
+
+<div *ngIf="!anySessions">
+  <mat-divider></mat-divider>
+  No session matches selected filters : /
+</div>
+
+<div class="lol">
+<table mat-table class="sessionList" [dataSource]="sessionsForPage" *ngIf="anySessions">
+  <ng-container class="container" matColumnDef="Gm">
+    <th mat-header-cell *matHeaderCellDef > Gm </th>
+    <td mat-cell *matCellDef="let session"> {{session.gm.name}} </td>
+  </ng-container>
+  <ng-container class="container" matColumnDef="System">
+    <th mat-header-cell *matHeaderCellDef> System </th>
+    <td mat-cell *matCellDef="let session"> {{session.system.name}} </td>
+  </ng-container>
+  <ng-container class="container" matColumnDef="Title">
+    <th mat-header-cell *matHeaderCellDef> Title </th>
+    <td mat-cell *matCellDef="let session"> {{session.title}} </td>
+  </ng-container>
+  <ng-container class="container" matColumnDef="Tags">
+    <th mat-header-cell *matHeaderCellDef> Tags </th>
+    <td mat-cell *matCellDef="let session"> {{session.tags}} </td>
+  </ng-container>
+  <ng-container class="container" matColumnDef="Triggers">
+    <th mat-header-cell *matHeaderCellDef> Triggers </th>
+    <td mat-cell *matCellDef="let session"> {{session.triggers}} </td>
+  </ng-container>
+
+  
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr class="regularRow" mat-row *matRowDef="let myRowData; columns: columnsToDisplay" (click)="displaySessionDetails(myRowData)"></tr>  
+</table>
+<mat-paginator [length]="filteredSessions.length"
+               [pageSize]="pageSize"
+               [hidePageSize]="true"
+               [showFirstLastButtons]="true"
+               [pageSizeOptions]="[]"
+               aria-label="Select page"
+               (page)="handlePagination($event)">
+</mat-paginator>
+</div>
+</div>
+
+<div *ngIf="componentState==1" class="horizontal-center">
+  <h2>Session details</h2>
+  <hr>
+  <mat-card class="horizontal-center-card example-card">
+    <mat-card-header>
+      <img mat-card-avatar class="gmImage" src={{gmForSession.profilePicture}}>
+      <mat-card-title>{{sessionRow.title}}</mat-card-title>
+      <mat-card-subtitle>{{sessionRow.system.name}}</mat-card-subtitle>
+      <mat-card-subtitle>{{gmForSession.name}}</mat-card-subtitle>
+      <mat-card-subtitle><br></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content> 
+      <table>
+        <tr *ngIf="sessionRow.isRemote">
+          <th class="pink">
+            Online session
+          </th>
+        </tr>
+        <tr *ngIf="!sessionRow.isRemote">
+          <th class="pink">
+            In person session
+          </th>
+        </tr>
+        <tr class="justText">
+          <th class="justText">
+            Tags:
+          </th>
+          <th></th>
+          <th class="justTextTop">
+            {{sessionRow.tags}}
+          </th>
+        </tr>
+        <tr class="justText">
+          <th class="justText">
+            Triggers:
+          </th>
+          <th></th>
+          <th class="justTextTop">
+            {{sessionRow.triggers}}
+          </th>
+        </tr>
+      </table>
+    </mat-card-content>
+    <br>
+    <img mat-card-image src={{sessionPicture}}>
+    <br>
+    <mat-card-content>
+      <p>
+        <br>
+        {{sessionRow.description}}
+      </p>
+    </mat-card-content>
+    <mat-card-content>
+      <table>
+        <tr class="justText">
+          <th class="justText">
+            Number of players:
+          </th>
+          <th class="justTextTop">
+            {{sessionRow.currentNumberOfPlayers}}/{{sessionRow.maxNumberOfPlayers}}
+          </th>
+        </tr>
+        <tr class="justText">
+          <th class="justText">
+            Date:
+          </th>
+          <th class="justTextTop">
+            {{month}}/{{day}}/{{year}}
+          </th>
+        </tr>
+        <tr class="justText" *ngIf="sessionRow.isRemote">
+          <th class="justText">
+            VTT:
+          </th>
+          <th class="justTextTop">
+            {{sessionRow.vtt}}
+          </th>
+        </tr>
+        <tr class="justText" *ngIf="!sessionRow.isRemote">
+          <th class="justText">
+            Location:
+          </th>
+          <th class="justTextTop">
+            {{sessionRow.location}}
+          </th>
+        </tr>
+        <tr class="justText">
+          <th class="justText">
+            Email:
+          </th>
+          <th class="justTextTop">
+            {{gmForSession.email}}
+          </th>
+        </tr>
+        <tr class="justText">
+          <th class="justText">
+            Discord:
+          </th>
+          <th class="justTextTop">
+            {{gmForSession.discord}}
+          </th>
+        </tr>
+      </table>
+    </mat-card-content>
+    <div *ngIf="user.role == 'Player' && !playerIsInSession">
+    <mat-card-actions>
+      <button mat-flat-button color="accent" type="button" (click)="joinPlayer()">Join</button>
+    </mat-card-actions>
+    </div>
+  </mat-card>
+  <br>
+  <h2>Players:</h2>
+  <mat-divider></mat-divider>
+  <br>
+  <div *ngIf="playersForSession.length != 0" >
+    <table class="horizontal-center">
+      <tbody >
+      <tr *ngFor="let player of playersForSession">
+        <td class="playerInfo">
+          <img class="circle" src={{player.profilePicture}}>
+        </td>
+        <td class="playerInfo">
+          <h3>{{player.name}}</h3>
+        </td>
+        <td class="playerInfo">
+          <img class="discordIcon" src="assets\discordImage.png">
+        </td>
+        <td class="playerInfo">
+          <h3>{{player.discord}}</h3>
+        </td>
+      </tr>
+    </tbody>
+    </table>
+    </div>
+<div *ngIf="playersForSession.length==0">
+No player have joined this session yet. Maybe come back and check a little later ;)
+</div>
+<br>
+<mat-divider></mat-divider>
+<br>
+<button mat-flat-button color="primary" type="button" 
+(click)="onReturnClicked()">Return</button>
+</div>
+
+
+<div *ngIf="componentState == 3" class="horizontal-center">
+  <h3>You have successfully joined the session.</h3>
+  <mat-divider></mat-divider>
+  <br>
+  <button mat-flat-button color="primary" type="button" 
+      (click)="onReturnClicked()">Return</button>
+</div>
+
+<div *ngIf="componentState == 4" class="horizontal-center">
+<h3>Failed to join the session :c</h3>
+  <br>
+   Make sure you have a stable internet connection or try again later
+  <mat-divider></mat-divider>
+  <br>
+  <button mat-flat-button color="primary" type="button" 
+      (click)="onReturnClicked()">Return</button>
+</div>
+</div>

@@ -12,6 +12,14 @@ namespace MyBackend.Models
 
         public string Tags { get; set; } = string.Empty;
 
+        public string Triggers { get; set; } = string.Empty;
+
+        public string Date { get; set; } = string.Empty;
+        public bool IsRemote { get; set; }
+        //Like city or town, locale - (napisz to na froncie)
+        public string Location { get; set; } = string.Empty;
+        public string Vtt { get; set; } = string.Empty;
+
         public string Description { get; set; } = string.Empty;
 
         public string Picture { get; set; } = string.Empty;

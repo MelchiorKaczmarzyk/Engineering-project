@@ -1,0 +1,55 @@
+img.sessionImage {
+    max-width: 400px;
+    max-height: 400px;
+}
+.red {
+    color:rgba(253, 34, 34, 0.833)
+}
+
+button {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+
+#imgInp {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #333;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.custom-file-upload-red {
+    display: inline-block;
+    padding: 10px 20px;
+    color: rgba(253, 34, 34, 0.833);
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Button hover and focus effects */
+.custom-file-upload:hover,
+.custom-file-upload:focus {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+}
+
+.horizontal-center {
+    width: 50%; /* Set a width for the element */
+    margin: 0 auto; /* Auto margin centers it horizontally */
+    text-align: center; /* Optional: center the text inside */
+  }

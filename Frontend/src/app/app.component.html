@@ -13,6 +13,14 @@
         <span class="short-spacer"></span>  
         <span> <button mat-button (click)="onCreateSessionClicked()">Create session</button></span>
       </div>
+      <div *ngIf="currentUserRole == 'Admin'">
+        <span class="short-spacer"></span>  
+        <span> <button mat-button (click)="onUsersClicked()">Users</button></span>
+      </div>
+      <div *ngIf="currentUserRole == 'Admin'">
+        <span class="short-spacer"></span>  
+        <span> <button mat-button (click)="onSessionParametersClicked()">Session parameters</button></span>
+      </div>
       <span class="long-spacer"></span>
       <span *ngIf="currentUserRole == 'Gm' || currentUserRole == 'Player'"> 
         <button mat-button (click)="onAccountClicked()">{{userName}}</button>
@@ -89,6 +97,14 @@
 
 <div *ngIf="chosenAccount">
   <account-details></account-details>
+</div>
+
+<div *ngIf="chosenSessionParameters && currentUserRole == 'Admin'">
+  <session-parameters></session-parameters>
+</div>
+
+<div *ngIf="chosenUsers && currentUserRole == 'Admin'">
+  <manage-users></manage-users>
 </div>
 
 </div>

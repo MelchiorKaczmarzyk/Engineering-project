@@ -1,0 +1,121 @@
+img.profilePicDisplay {
+    border-radius: 50%; 
+    width: 200px;
+    height: 200px;
+    transform: translateX(40px);
+}
+
+table {
+    border-spacing: 0 20px;
+}
+
+table.user-details {
+    margin: 0% auto;
+    transform: translateX(35px);
+    
+}
+
+table.user-details-buttons {
+    margin: 0% auto;
+}
+
+button.delete {
+    background-color: red;
+    color: white;
+}
+
+button.small {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 12px;
+    padding-right: 0px;
+    background-color: white;
+    color :rgb(28, 28, 28);
+    height: 40px;          
+    white-space: nowrap;
+}
+
+button.small:hover {
+    filter: brightness(90%);
+}
+
+th.toBottom {
+    vertical-align: bottom;
+    text-align: left;
+}
+
+th.content {
+    text-align: center;
+    font-weight: normal;
+}
+
+th.content-password {
+    font-weight: bold;
+    text-align: center;
+    font-weight: normal;
+}
+
+th.toLeft {
+    text-align: left;
+}
+
+.red {
+    color:rgba(253, 34, 34, 0.833)
+}
+
+
+
+#imgInp {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #333;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.custom-file-upload-red {
+    display: inline-block;
+    padding: 10px 20px;
+    color: rgba(253, 34, 34, 0.833);
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.custom-file-upload:hover,
+.custom-file-upload:focus {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+}
+.horizontal-center {
+    width: 50%; /* Set a width for the element */
+    margin: 0 auto; /* Auto margin centers it horizontally */
+    text-align: center; /* Optional: center the text inside */
+  }
+
+.update {
+    width: 100px; /* Actual visible size */
+    margin-left: 40px; /* Adds space on the left */
+
+}
+.cancel {
+    width: 100px; /* Actual visible size */
+
+    margin-right: 40px; /* Adds space on the right */
+}
+.resend {
+    width: 100px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}

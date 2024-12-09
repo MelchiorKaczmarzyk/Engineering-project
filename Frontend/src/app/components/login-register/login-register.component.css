@@ -1,0 +1,67 @@
+img.profilePicDisplay {
+    border-radius: 50%; 
+    width: 200px;
+    height: 200px;
+}
+
+td.discordIcon {
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+
+img.discordIcon {
+    padding-left: 5px;
+    width: 25px;
+    height: 25px;
+}
+
+.red {
+    color:rgba(253, 34, 34, 0.833)
+}
+
+#imgInp {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    color: #333;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+table.user-details {
+    margin: 0% auto;
+    transform: translateX(35px);
+    
+}
+
+.horizontal-center {
+    width: 50%; /* Set a width for the element */
+    margin: 0 auto; /* Auto margin centers it horizontally */
+    text-align: center; /* Optional: center the text inside */
+  }
+
+  .horizontal-center-buttons {
+    width: 50%; /* Set a width for the element */
+    margin: 0 auto; /* Auto margin centers it horizontally */
+    text-align: center; /* Optional: center the text inside */
+  }
+
+.register {
+    width: 100px; /* Actual visible size */
+    margin-left: 50px; /* Adds space on the left */
+    margin-right: 50px; /* Adds space on the right */
+}
+.cancel {
+    width: 100px; /* Actual visible size */
+    margin-left: 50px; /* Adds space on the left */
+    margin-right: 50px; /* Adds space on the right */
+}

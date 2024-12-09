@@ -136,3 +136,7 @@ C:\Users\melch\source\repos\MyBackend\MyBackend\obj\Release\net8.0\refint\MyBack
 C:\Users\melch\source\repos\MyBackend\MyBackend\obj\Release\net8.0\MyBackend.pdb
 C:\Users\melch\source\repos\MyBackend\MyBackend\obj\Release\net8.0\MyBackend.genruntimeconfig.cache
 C:\Users\melch\source\repos\MyBackend\MyBackend\obj\Release\net8.0\ref\MyBackend.dll
+C:\Users\melch\source\repos\MyBackend\MyBackend\bin\Release\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\melch\source\repos\MyBackend\MyBackend\bin\Release\net8.0\MailKit.dll
+C:\Users\melch\source\repos\MyBackend\MyBackend\bin\Release\net8.0\MimeKit.dll
+C:\Users\melch\source\repos\MyBackend\MyBackend\bin\Release\net8.0\System.Formats.Asn1.dll

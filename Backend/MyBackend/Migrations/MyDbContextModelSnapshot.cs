@@ -158,28 +158,6 @@ namespace MyBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Systems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Name = "d&d 5e"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Name = "Veasen"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Name = "Things from the Flood"
-                        },
-                        new
-                        {
-                            Id = "4",
-                            Name = "DC20"
-                        });
                 });
 
             modelBuilder.Entity("MyBackend.Entities.Gm", b =>
@@ -195,18 +173,6 @@ namespace MyBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Gms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Name = "Gm1"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Name = "Gm2"
-                        });
                 });
 
             modelBuilder.Entity("MyBackend.Entities.Player", b =>
@@ -222,33 +188,14 @@ namespace MyBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Players");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Name = "Player1"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Name = "Player2"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Name = "Player3"
-                        },
-                        new
-                        {
-                            Id = "4",
-                            Name = "Player4"
-                        });
                 });
 
             modelBuilder.Entity("MyBackend.Entities.Session", b =>
                 {
                     b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -257,6 +204,13 @@ namespace MyBackend.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("GmId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsRemote")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -280,6 +234,14 @@ namespace MyBackend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Triggers")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Vtt")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GmId");
@@ -287,52 +249,36 @@ namespace MyBackend.Migrations
                     b.HasIndex("SystemId");
 
                     b.ToTable("Sessions");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Description = "Description",
-                            GmId = "1",
-                            MaxNumberOfPlayers = 4,
-                            PicturePath = "",
-                            SystemId = "1",
-                            Tags = "tag1, tag2, tag3",
-                            Title = "title1"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Description = "Description",
-                            GmId = "1",
-                            MaxNumberOfPlayers = 4,
-                            PicturePath = "",
-                            SystemId = "2",
-                            Tags = "tag1, tag2, tag3",
-                            Title = "title2"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Description = "Description",
-                            GmId = "2",
-                            MaxNumberOfPlayers = 4,
-                            PicturePath = "",
-                            SystemId = "3",
-                            Tags = "tag1, tag2, tag3",
-                            Title = "title3"
-                        },
-                        new
-                        {
-                            Id = "4",
-                            Description = "Description",
-                            GmId = "2",
-                            MaxNumberOfPlayers = 6,
-                            PicturePath = "",
-                            SystemId = "4",
-                            Tags = "tag2, tag3",
-                            Title = "title4"
-                        });
+            modelBuilder.Entity("MyBackend.Entities.Tag", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("MyBackend.Entities.Trigger", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Triggers");
                 });
 
             modelBuilder.Entity("MyBackend.Entities.User", b =>
@@ -415,6 +361,21 @@ namespace MyBackend.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("MyBackend.Entities.Vtt", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vtts");
+                });
+
             modelBuilder.Entity("PlayerSession", b =>
                 {
                     b.Property<string>("PlayersId")
@@ -428,58 +389,6 @@ namespace MyBackend.Migrations
                     b.HasIndex("SessionsId");
 
                     b.ToTable("PlayerSession");
-
-                    b.HasData(
-                        new
-                        {
-                            PlayersId = "1",
-                            SessionsId = "1"
-                        },
-                        new
-                        {
-                            PlayersId = "2",
-                            SessionsId = "1"
-                        },
-                        new
-                        {
-                            PlayersId = "2",
-                            SessionsId = "2"
-                        },
-                        new
-                        {
-                            PlayersId = "3",
-                            SessionsId = "2"
-                        },
-                        new
-                        {
-                            PlayersId = "3",
-                            SessionsId = "3"
-                        },
-                        new
-                        {
-                            PlayersId = "4",
-                            SessionsId = "3"
-                        },
-                        new
-                        {
-                            PlayersId = "1",
-                            SessionsId = "4"
-                        },
-                        new
-                        {
-                            PlayersId = "2",
-                            SessionsId = "4"
-                        },
-                        new
-                        {
-                            PlayersId = "3",
-                            SessionsId = "4"
-                        },
-                        new
-                        {
-                            PlayersId = "4",
-                            SessionsId = "4"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBackend.Entities
@@ -12,9 +13,13 @@ namespace MyBackend.Entities
         [Required(ErrorMessage = "title error")]
         [MaxLength(50)]
         public string Title { get; set; } = string.Empty;
-
-        //List of strings? Chyba nie, bo nie ma żadnej listy ustalonych
         public string Tags { get; set; } = string.Empty;
+        public string Triggers { get; set; } = string.Empty;
+        public DateTime? Date { get; set; }
+        public bool IsRemote { get; set; }
+        //Like city or town, locale - (napisz to na froncie)
+        public string Location {  get; set; } = string.Empty;
+        public string Vtt { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "description error")]
         [MaxLength(500)]

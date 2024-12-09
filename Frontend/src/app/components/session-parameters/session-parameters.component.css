@@ -1,0 +1,16 @@
+.horizontal-center {
+    width: 50%; /* Set a width for the element */
+    margin: 0 auto; /* Auto margin centers it horizontally */
+    text-align: center; /* Optional: center the text inside */
+  }
+.red {
+    color:rgba(253, 34, 34, 0.833)
+}
+.green {
+    color:rgba(59, 255, 89, 0.836)
+}
+button {
+    margin-left: 10px;
+    margin-bottom: 20px;
+    min-width: 90px;
+  }

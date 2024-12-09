@@ -6,7 +6,7 @@ namespace MyBackend.Profiles
     {
         public SessionForServiceProfile()
         {
-            CreateMap<Entities.Session, Models.SessionForService>();
+            CreateMap<Entities.Session, Models.SessionForServiceDateTime>();
         }
     }
 }

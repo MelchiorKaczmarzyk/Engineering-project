@@ -50,5 +50,23 @@ namespace MyBackend.Controllers
                     "Error creating new session record");
             }
         }
+        [HttpDelete("deleteSystem")]
+        public ActionResult DeleteSystem(string systemName)
+        {
+            try
+            {
+                if (systemName == null || systemName == string.Empty)
+                {
+                    return BadRequest();
+                }
+                _repos.DeleteSystem(systemName);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+        }
     }
 }

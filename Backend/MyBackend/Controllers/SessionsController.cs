@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.OpenApi.Any;
 using MyBackend.Entities;
 using MyBackend.Models;
+using MyBackend.Models.MyBackend.Models;
 using MyBackend.Services;
 using System.Reflection.Metadata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MyBackend.Controllers
 {
@@ -40,7 +42,7 @@ namespace MyBackend.Controllers
             return Ok(_mapper.Map<IEnumerable<SessionModel>>(sessions));
         }
 
-        [HttpGet("{sessionId}", Name = "GetPlayer")]
+        [HttpGet("{sessionId}", Name = "GetSession")]
         public async Task<ActionResult<SessionModel>> GetSession(string sessionId)
         {
             var sessions = await _repos.GetSessionsAsync();
@@ -49,6 +51,7 @@ namespace MyBackend.Controllers
             {
                 return NotFound();
             }
+
             return Ok(_mapper.Map<SessionModel>(session));
         }
 
@@ -57,17 +60,40 @@ namespace MyBackend.Controllers
         {
             try
             {
+                
+
                 var sessions = await _repos.GetSessionsAsync();
-                var result = _mapper.Map<IEnumerable<SessionForService>>(sessions);
-                //.Where(s => s.CurrentNumberOfPlayers < s.MaxNumberOfPlayers)
-                return Ok(result);
+                var result = _mapper.Map<IEnumerable<SessionForServiceDateTime>>(sessions);
+                var realResult = new List<SessionForService>();
+                foreach (var session in result)
+                {
+                    DateTimeOffset date = new DateTimeOffset(session.Date);
+                    long millisecondsSinceEpoch = date.ToUnixTimeMilliseconds();
+
+                    var sessionForService = new SessionForService(){
+                        Gm = session.Gm,
+                        Title = session.Title,
+                        System = session.System,
+                        Players = session.Players,
+                        MaxNumberOfPlayers = session.MaxNumberOfPlayers,
+                        Tags = session.Tags,
+                        IsRemote = session.IsRemote,
+                        Description = session.Description,
+                        Location = session.Location,
+                        Triggers = session.Triggers,
+                        Vtt = session.Vtt,
+                        Date = millisecondsSinceEpoch.ToString()
+                    };
+                    realResult.Add(sessionForService);
+                }
+                return Ok(realResult);
             }
             catch
             {
                 return BadRequest();
             }
         }
-
+        /*
         [HttpGet("playerService")]
         public async Task<ActionResult<IEnumerable<PlayerForService>>> GetPlayersForService()
         {
@@ -81,6 +107,7 @@ namespace MyBackend.Controllers
             var gms = await _repos.GetGmsAsync();
             return Ok(_mapper.Map<IEnumerable<GmForService>>(gms));
         }
+        */
 
         [HttpGet("sessionPicture")]
         public async Task<ActionResult> GetSessionPicture(string title)
@@ -126,9 +153,17 @@ namespace MyBackend.Controllers
 
         }
 
+        //TUTAJ BĘDZIESZ MUSIAŁ OBSŁUGĘ TYCH PÓL NOWYCH WSZYSTKICH DODAĆ
+        //
+        //
+        //
         [HttpPost("addSession")]
         public async Task<ActionResult<ParamsAddSessionResponse>> AddSession(SessionPost sessionPosted)
         {
+            string timeStampString = sessionPosted.Date; 
+            long timestampMilliseconds = long.Parse(timeStampString);
+            long timestampSeconds = timestampMilliseconds / 1000;
+            DateTime dateTimeUtc = DateTimeOffset.FromUnixTimeSeconds(timestampSeconds).UtcDateTime.ToLocalTime();
             try
             {
                 bool errorHappened = false;
@@ -179,7 +214,6 @@ namespace MyBackend.Controllers
                     Directory.GetCurrentDirectory(), $"SessionPictures\\uploaded_file_{Guid.NewGuid()}.png");
 
                 System.IO.File.WriteAllBytes(filePath, fileBytes);
-
                 var sessionToAdd = new Session
                 {
                     Id = Guid.NewGuid().ToString("N"),
@@ -193,6 +227,12 @@ namespace MyBackend.Controllers
                     Tags = sessionPosted.Tags,
                     PicturePath = filePath,
                     MaxNumberOfPlayers = sessionPosted.MaxNumberOfPlayers,
+                    //Te nowe
+                    Triggers = sessionPosted.Triggers,
+                    IsRemote = sessionPosted.IsRemote,
+                    Vtt = sessionPosted.Vtt,
+                    Location = sessionPosted.Location,
+                    Date = new DateTime(long.Parse(sessionPosted.Date))
                 };
                 _repos.AddSession(sessionToAdd);
                 return Ok();
@@ -232,14 +272,5 @@ namespace MyBackend.Controllers
             return Ok();
         }
 
-        [HttpGet("testDeploy")]
-        public ActionResult TestDeploy()
-        {
-            var response = new
-            {
-                text = "Requests from deployed app work for deployed backend"
-            };
-            return Ok(response);
-        }
     }
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core"
-import { UserService } from "./UserService"
+import { UserService } from "./services/user.service"
 import { Subscription } from "rxjs"
 
 @Component({
@@ -43,12 +43,16 @@ export class App implements OnInit, OnDestroy, OnChanges
     chosenMySessions : boolean = false
     chosenAccount : boolean = false
     chosenLoginRegister : boolean = true
+    chosenSessionParameters : boolean = false
+    chosenUsers : boolean = false
 
     onExploreClicked() {
         this.chosenMySessions = false
         this.chosenAccount = false
         this.chosenCreateSession = false
         this.chosenLoginRegister = false
+        this.chosenUsers = false
+        this.chosenSessionParameters = false
         this.chosenExplore = true
     }
 
@@ -57,6 +61,8 @@ export class App implements OnInit, OnDestroy, OnChanges
         this.chosenAccount = false
         this.chosenCreateSession = false
         this.chosenLoginRegister = false
+        this.chosenUsers = false
+        this.chosenSessionParameters = false
         this.chosenMySessions = true
     }
 
@@ -65,6 +71,8 @@ export class App implements OnInit, OnDestroy, OnChanges
         this.chosenMySessions = false
         this.chosenCreateSession = false
         this.chosenLoginRegister = false
+        this.chosenUsers = false
+        this.chosenSessionParameters = false
         this.chosenAccount = true
     }
 
@@ -73,7 +81,29 @@ export class App implements OnInit, OnDestroy, OnChanges
         this.chosenAccount = false
         this.chosenExplore = false
         this.chosenLoginRegister = false
+        this.chosenUsers = false
+        this.chosenSessionParameters = false
         this.chosenCreateSession = true
+    }
+
+    onUsersClicked() {
+        this.chosenMySessions = false
+        this.chosenAccount = false
+        this.chosenCreateSession = false
+        this.chosenExplore = false
+        this.chosenLoginRegister = false
+        this.chosenSessionParameters = false
+        this.chosenUsers = true
+    }
+
+    onSessionParametersClicked() {
+        this.chosenMySessions = false
+        this.chosenAccount = false
+        this.chosenCreateSession = false
+        this.chosenExplore = false
+        this.chosenLoginRegister = false
+        this.chosenUsers = false
+        this.chosenSessionParameters = true
     }
 
     onHomeClicked() {
@@ -81,6 +111,8 @@ export class App implements OnInit, OnDestroy, OnChanges
         this.chosenAccount = false
         this.chosenExplore = false
         this.chosenCreateSession = false
+        this.chosenUsers = false
+        this.chosenSessionParameters = false
         this.chosenLoginRegister = true
     }
 

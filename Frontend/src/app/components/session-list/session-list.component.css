@@ -1,0 +1,131 @@
+table.center {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    width: 90%;
+  }
+  table.cetner th {
+    text-align:left;
+  }
+
+  th {
+    text-align:left;
+  }
+
+  .sessionList {
+    width: 90%;
+    padding-right: 40px;
+    table-layout: fixed;
+    
+  }
+
+  .lol {
+    overflow-x: hidden;
+  }
+
+  button {
+    margin-left: 10px;
+    margin-bottom: 20px;
+  }
+
+  .currentFilters {
+    margin-left: 10px;
+    width: 400px;
+  }
+
+  tr.regularRow {
+    transition: filter 0.3s ease;
+}
+
+tr:hover.regularRow {
+    filter: brightness(90%);
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+/*Size depends on the card size*/
+image.gmImage {
+  width: 100px; /* desired circle diameter */
+  height: 100px; /* same as width to make it a square */
+  border-radius: 50%;
+  
+}
+
+td.playerInfo {
+  padding-right: 30px; /* Adjust the value to increase/decrease spacing */
+}
+
+td.discordIcon {
+  padding-right: 5px;
+  padding-bottom: 10px;
+}
+
+img.discordIcon {
+  width: 25px;
+  height: 25px;
+}
+
+tr.justText {
+  font-weight: normal;
+}
+
+th.justText {
+  font-weight: normal;
+}
+
+th.pink {
+  font-weight: normal;
+  color: #e91e63
+}
+
+th.justTextTop {
+  font-weight: normal;
+  padding-left: 20px;
+}
+
+
+img.circle {
+  width: 100px; /* desired circle diameter */
+  height: 100px; /* same as width to make it a square */
+  border-radius: 50%;
+  overflow: hidden; /* ensures any excess image is clipped */
+  object-fit: cover; /* scales the image to maintain aspect ratio */
+}
+
+.inperson-radio-button {
+  margin-left: 20px;
+}
+
+.example-card {
+  max-width: 800px;
+  width: 800px;
+  min-width: 300px;
+}
+
+.horizontal-center {
+  width: 50%; /* Set a width for the element */
+  margin: 0 auto; /* Auto margin centers it horizontally */
+  text-align: center; /* Optional: center the text inside */
+}
+
+.horizontal-center-card {
+  width: 50%; /* Set a width for the element */
+  margin: 0 auto; /* Auto margin centers it horizontally */
+}
+
+  @media screen and (max-width:650px) {
+    .example-card {
+      max-width: 300px;
+    }
+    .smallScreen  { display: block; visibility: visible; }
+    .bigScreen { display: none !important; }
+    .currentFilters { margin-left: 0px; width: 300px;}
+    .tableButton {padding: 0%; margin: 0%; font-size: smaller;}
+    .example-card {
+      max-width: 300px;
+    }
+}
+

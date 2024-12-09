@@ -74,6 +74,17 @@ th.justText {
   font-weight: normal;
 }
 
+th.pink {
+  font-weight: normal;
+  color: #e91e63
+}
+
+th.justTextTop {
+  font-weight: normal;
+  padding-left: 20px;
+}
+
+
 button.red {
   background-color: red;
   color : white;
@@ -84,6 +95,29 @@ img.circle {
   border-radius: 50%;
   overflow: hidden; /* ensures any excess image is clipped */
   object-fit: cover; /* scales the image to maintain aspect ratio */
+}
+
+table.session-details {
+  margin: 0% auto;
+  transform: translateX(35px);
+  
+}
+
+.example-card {
+  max-width: 800px;
+  width: 800px;
+  min-width: 300px;
+}
+
+.horizontal-center {
+  width: 50%; /* Set a width for the element */
+  margin: 0 auto; /* Auto margin centers it horizontally */
+  text-align: center; /* Optional: center the text inside */
+}
+
+.horizontal-center-card {
+  width: 50%; /* Set a width for the element */
+  margin: 0 auto; /* Auto margin centers it horizontally */
 }
 
 @media screen and (max-width:650px) {
